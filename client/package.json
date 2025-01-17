@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "tsc -b && vite build"
+    "build": "tsc -b && vite build",
+    "start": "vite start"
   },
   "dependencies": {
     "@radix-ui/react-slot": "",
