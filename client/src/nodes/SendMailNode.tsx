@@ -68,7 +68,7 @@ export const SendMailNode = ({ id }: { id: string }) => {
       ) {
         console.log("all data received");
         const response = await fetch(
-          "http://localhost:8000/pipelines/send-mail",
+          import.meta.env.VITE_BACKEND_URL + "/pipelines/send-mail",
           {
             method: "POST",
             headers: {

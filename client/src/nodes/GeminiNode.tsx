@@ -18,13 +18,16 @@ export const GeminiNode = ({ id }: { id: string }) => {
 
   const FetchSummary = async () => {
     try {
-      const response = await fetch("http://localhost:8000/pipelines/ai", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: `pipeline=${textData?.data?.value}`,
-      });
+      const response = await fetch(
+        import.meta.env.VITE_BACKEND_URL + "/pipelines/ai",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: `pipeline=${textData?.data?.value}`,
+        }
+      );
       if (!response.ok) throw new Error("Network response was not ok");
 
       const res = await response.json();

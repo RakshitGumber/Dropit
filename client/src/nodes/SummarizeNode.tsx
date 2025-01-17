@@ -28,22 +28,28 @@ export const SummarizeNode = ({ id }: { id: string }) => {
     try {
       let response;
       if (textData?.type === "text") {
-        response = await fetch("http://localhost:8000/pipelines/summarize", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: `pipeline=${textData?.data?.value}`,
-        });
+        response = await fetch(
+          import.meta.env.VITE_BACKEND_URL + "/pipelines/summarize",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: `pipeline=${textData?.data?.value}`,
+          }
+        );
         if (!response.ok) throw new Error("Network response was not ok");
       } else if (textData?.type === "gemini") {
-        response = await fetch("http://localhost:8000/pipelines/summarize", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: `pipeline=${textData?.data?.summary}`,
-        });
+        response = await fetch(
+          import.meta.env.VITE_BACKEND_URL + "/pipelines/summarize",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: `pipeline=${textData?.data?.summary}`,
+          }
+        );
         if (!response.ok) throw new Error("Network response was not ok");
         const res = await response.json();
         updateNodeData(id, { ...res });
