@@ -14,17 +14,9 @@ import {
 import { useStore } from "./store";
 import { shallow } from "zustand/shallow";
 
-import {
-  TextNode,
-  OutputNode,
-  VariableNode,
-  SummarizeNode,
-  GeminiNode,
-  StickyNode,
-} from "./nodes";
+import { getNodetypes } from "./registry/registry";
 
 import "@xyflow/react/dist/style.css";
-import { SendMailNode } from "./nodes/SendMailNode";
 
 const gridSize = 25;
 const proOptions = { hideAttribution: true };
@@ -35,15 +27,7 @@ interface NodeData {
   [key: string]: any;
 }
 
-const nodeTypes: any = {
-  customOutput: OutputNode,
-  text: TextNode,
-  variables: VariableNode,
-  summarize: SummarizeNode,
-  gemini: GeminiNode,
-  stickyNote: StickyNode,
-  sendMail: SendMailNode,
-};
+const nodeTypes: any = Object.fromEntries(getNodetypes());
 
 interface StoreSelector {
   nodes: Node<NodeData>[];

@@ -7,7 +7,7 @@ export const DraggableNode = ({
 }: {
   type: string;
   label: string;
-  icon: JSX.Element;
+  icon?: JSX.Element;
 }) => {
   const onDragStart = (
     event: React.DragEvent<HTMLDivElement>,

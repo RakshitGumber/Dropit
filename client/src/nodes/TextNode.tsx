@@ -12,13 +12,10 @@ interface Parameter {
   value: string;
 }
 
-export const TextNode = ({
-  id,
-  selected,
-}: {
+export const TextNode: React.FC<{
   id: string;
   selected: boolean;
-}) => {
+}> = ({ id, selected }): React.ReactElement => {
   const [value, setValue] = useState("");
   const [renderValue, setRenderValue] = useState("");
   const variablesConnections = useHandleConnections({
