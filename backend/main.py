@@ -91,3 +91,5 @@ def send_mail(pipeline: str = Form(...)):
         body,
     )
     return {"message": "Email sent successfully"}
+
+# push
