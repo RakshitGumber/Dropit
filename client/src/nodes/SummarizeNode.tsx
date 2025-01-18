@@ -29,7 +29,7 @@ export const SummarizeNode = ({ id }: { id: string }) => {
       let response;
       if (textData?.type === "text") {
         response = await fetch(
-          import.meta.env.VITE_BACKEND_URL + "/pipelines/summarize",
+          "https://dropit-er31.onrender.com/pipelines/summarize",
           {
             method: "POST",
             headers: {

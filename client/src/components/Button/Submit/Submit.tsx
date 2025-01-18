@@ -10,7 +10,7 @@ const selector = (state: StoreState) => ({
 export const Submit = () => {
   const { nodes, edges } = useStore(selector, shallow);
 
-  const url = import.meta.env.VITE_BACKEND_URL + "/pipelines/parse";
+  const url = "https://dropit-er31.onrender.com/pipelines/parse";
   const submitButton = async () => {
     await toast.promise(
       postPipeline(),

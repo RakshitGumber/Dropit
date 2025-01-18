@@ -19,7 +19,7 @@ export const GeminiNode = ({ id }: { id: string }) => {
   const FetchSummary = async () => {
     try {
       const response = await fetch(
-        import.meta.env.VITE_BACKEND_URL + "/pipelines/ai",
+        "https://dropit-er31.onrender.com/pipelines/ai",
         {
           method: "POST",
           headers: {

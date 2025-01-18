@@ -68,7 +68,7 @@ export const SendMailNode = ({ id }: { id: string }) => {
       ) {
         console.log("all data received");
         const response = await fetch(
-          import.meta.env.VITE_BACKEND_URL + "/pipelines/send-mail",
+          "https://dropit-er31.onrender.com/pipelines/send-mail",
           {
             method: "POST",
             headers: {
