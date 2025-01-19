@@ -1,36 +1,14 @@
+from fastapi import APIRouter, Form
 import json
-from dotenv import load_dotenv
-from fastapi import FastAPI, Form
-from fastapi.middleware.cors import CORSMiddleware
 from utils.summarize import summarize
 from utils.gemini import chatbot
 from utils.mailSender import sendMail
 
-load_dotenv()
 
-app = FastAPI()
-
-origins = [
-    "http://localhost",
-    "http://localhost:5173",
-    "https://dropit-kappa.vercel.app/",
-]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+pipelines = APIRouter()
 
 
-@app.get("/")
-def read_root():
-    return {"Ping": "Pong"}
-
-
-@app.post("/pipelines/parse")
+@pipelines.post("/parse")
 def parse_pipeline(pipeline: str = Form(...)):
     pipeline_dict = dict(json.loads(pipeline))
     num_nodes = len(pipeline_dict["nodes"])
@@ -67,19 +45,19 @@ def parse_pipeline(pipeline: str = Form(...)):
     return {"num_nodes": num_nodes, "num_edges": num_edges, "is_dag": is_dag}
 
 
-@app.post("/pipelines/summarize")
+@pipelines.post("/summarize")
 def summarize_pipeline(pipeline: str = Form(...)):
     text = summarize(pipeline)
     return {"summary": text}
 
 
-@app.post("/pipelines/ai")
+@pipelines.post("/ai")
 def ai_pipeline(pipeline: str = Form(...)):
     text = chatbot(pipeline)
     return {"summary": text}
 
 
-@app.post("/pipelines/send-mail")
+@pipelines.post("/send-mail")
 def send_mail(pipeline: str = Form(...)):
     pipeline_dict = dict(json.loads(pipeline))
     receiver = pipeline_dict["receiver"]
