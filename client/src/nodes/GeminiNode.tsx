@@ -1,4 +1,4 @@
-import { NodeTemplate } from "../components";
+import { NodeTemplate } from "../components/Node";
 import { Button } from "@/components/ui/button";
 import { IconZodiacGemini } from "@tabler/icons-react";
 import {

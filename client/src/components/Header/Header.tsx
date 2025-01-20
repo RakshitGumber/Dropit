@@ -1,4 +1,5 @@
-import { ToggleTheme, Submit } from "../Button";
+import { Submit } from "../Button/Submit";
+import { ToggleTheme } from "../Button/ToggleTheme";
 
 export const Header = () => {
   return (

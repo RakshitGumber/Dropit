@@ -1,4 +1,5 @@
-import { Header, Library } from "@/components";
+import { Library } from "@/components/Library";
+import { Header } from "@/components/Header";
 import { PipelineUI } from "@/ui";
 import { createFileRoute } from "@tanstack/react-router";
 import { Toaster } from "react-hot-toast";

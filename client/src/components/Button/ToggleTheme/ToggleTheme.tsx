@@ -1,4 +1,4 @@
-import { useTheme } from "@/providers";
+import { useTheme } from "@/providers/ThemeProvider";
 import { Button } from "@/components/ui/button";
 import { RxMoon, RxSun } from "react-icons/rx";
 

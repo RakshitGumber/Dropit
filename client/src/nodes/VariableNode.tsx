@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NodeTemplate } from "../components";
+import { NodeTemplate } from "../components/Node";
 import { useReactFlow } from "@xyflow/react";
 import { Button } from "@/components/ui/button";
 

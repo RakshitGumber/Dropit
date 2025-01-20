@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Node, NodeHeader, NodeContent } from "../components";
+import { Node, NodeHeader, NodeContent } from "../components/Node";
 import { cn } from "../lib/utils";
 
 const colors = [
