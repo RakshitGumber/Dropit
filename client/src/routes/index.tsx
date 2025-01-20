@@ -1,16 +1,19 @@
-import { PipelineUI } from "./ui";
 import { Header, Library } from "@/components";
+import { PipelineUI } from "@/ui";
+import { createFileRoute } from "@tanstack/react-router";
 import { Toaster } from "react-hot-toast";
 
-function App() {
+export const Route = createFileRoute("/")({
+  component: RouteComponent,
+});
+
+function RouteComponent() {
   return (
-    <>
+    <div>
       <Header />
       <Library />
       <PipelineUI />
       <Toaster position="top-center" reverseOrder={false} />
-    </>
+    </div>
   );
 }
-
-export default App;
