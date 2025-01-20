@@ -1,9 +1,19 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
-import { ThemeProvider } from "./providers";
-import App from "./App";
+import { ThemeProvider } from "./providers/ThemeProvider";
 import { ReactFlowProvider } from "@xyflow/react";
 import "./index.css";
+import { RouterProvider, createRouter } from "@tanstack/react-router";
+
+import { routeTree } from "./routeTree.gen";
+
+const router = createRouter({ routeTree });
+
+declare module "@tanstack/react-router" {
+  interface Register {
+    router: typeof router;
+  }
+}
 
 const rootElement = document.getElementById("root")!;
 if (!rootElement.innerHTML) {
@@ -12,7 +22,7 @@ if (!rootElement.innerHTML) {
     <StrictMode>
       <ThemeProvider defaultTheme="dark">
         <ReactFlowProvider>
-          <App />
+          <RouterProvider router={router} />
         </ReactFlowProvider>
       </ThemeProvider>
     </StrictMode>

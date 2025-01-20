@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NodeTemplate } from "../components";
+import { NodeTemplate } from "../components/Node";
 import { Button } from "@/components/ui/button";
 import { IconMail } from "@tabler/icons-react";
 import { useNodesData, useHandleConnections } from "@xyflow/react";

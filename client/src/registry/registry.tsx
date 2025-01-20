@@ -1,11 +1,9 @@
-import {
-  OutputNode,
-  TextNode,
-  VariableNode,
-  SummarizeNode,
-  GeminiNode,
-  StickyNode,
-} from "@/nodes";
+import { TextNode } from "@/nodes/TextNode";
+import { OutputNode } from "@/nodes/OutputNode";
+import { VariableNode } from "@/nodes/VariableNode";
+import { SummarizeNode } from "@/nodes/SummarizeNode";
+import { GeminiNode } from "@/nodes/GeminiNode";
+import { StickyNode } from "@/nodes/StickyNode";
 import React from "react";
 
 interface DraggableNodesRegistration<T extends Record<string, any>> {
