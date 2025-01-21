@@ -1,6 +1,5 @@
 import { NodeTemplate } from "../components/Node";
 import { Button } from "@/components/ui/button";
-import { IconBrandAlgolia } from "@tabler/icons-react";
 import {
   useHandleConnections,
   useNodesData,
@@ -83,7 +82,7 @@ const Summarize = ({
         className="w-[100px] h-[100px] rounded-xl flex items-center justify-center"
         onClick={handleButtonClick}
       >
-        <IconBrandAlgolia className="scale-[3]" />
+        <span>AI</span>
       </Button>
     </div>
   );

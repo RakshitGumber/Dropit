@@ -1,6 +1,5 @@
 import { NodeTemplate } from "../components/Node";
 import { Button } from "@/components/ui/button";
-import { IconZodiacGemini } from "@tabler/icons-react";
 import {
   useHandleConnections,
   useNodesData,
@@ -67,7 +66,7 @@ const Summarize = ({
         className="w-[100px] h-[100px] rounded-xl flex items-center justify-center"
         onClick={handleButtonClick}
       >
-        <IconZodiacGemini className="scale-[3]" />
+        <span>Gem</span>
       </Button>
     </div>
   );

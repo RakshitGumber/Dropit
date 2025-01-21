@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { NodeTemplate } from "../components/Node";
 import { Button } from "@/components/ui/button";
-import { IconMail } from "@tabler/icons-react";
 import { useNodesData, useHandleConnections } from "@xyflow/react";
 import toast from "react-hot-toast";
 import showdown from "showdown";
@@ -108,7 +107,7 @@ const SendMailComponent = ({
         size="icon"
         className="w-[100px] h-[100px] rounded-xl flex items-center justify-center"
       >
-        <IconMail className="scale-[3]" />
+        <span>Mail</span>
       </Button>
     </div>
   );
