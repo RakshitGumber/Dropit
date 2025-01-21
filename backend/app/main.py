@@ -1,11 +1,18 @@
-from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routers.route import router
+from fastapi_sqlalchemy import DBSessionMiddleware
+import os
+
+
+from dotenv import load_dotenv
 
 load_dotenv()
 
+
 app = FastAPI()
+
+DATABASE_URL = os.environ["DATABASE_URL"]
+app.add_middleware(DBSessionMiddleware, db_url=DATABASE_URL)
 
 origins = [
     "http://localhost",
@@ -20,5 +27,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+from .routers.route import router
 
 app.include_router(router)
