@@ -23,6 +23,8 @@ export interface StoreState {
   nodes: Node<NodeData>[];
   edges: Edge[];
   nodeIDs: NodeIDs;
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
   getNodeID: (type: string) => string;
   addNode: (node: Node<NodeData>) => void;
   onNodesChange: (changes: NodeChange[]) => void;
@@ -33,6 +35,7 @@ export interface StoreState {
 }
 
 export const useStore = create<StoreState>((set, get) => ({
+  loading: true,
   nodes: [],
   edges: [],
   nodeIDs: {},
@@ -89,5 +92,8 @@ export const useStore = create<StoreState>((set, get) => ({
         return node;
       }),
     });
+  },
+  setLoading: (loading: boolean) => {
+    set({ loading: loading });
   },
 }));

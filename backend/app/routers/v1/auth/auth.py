@@ -15,7 +15,7 @@ async def get_users():
 
 @auth_route.post("/")
 async def create_user(user: User):
-    db_user = UserModel(id=1,name=user.name, email=user.email)
+    db_user = UserModel(id=1, name=user.name, email=user.email)
     db.session.add(db_user)
     db.session.commit()
     return {"user": db_user}
