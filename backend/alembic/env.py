@@ -1,9 +1,9 @@
 from logging.config import fileConfig
 
-from sqlalchemy import pool
-from sqlmodel import SQLModel, create_engine
+from sqlmodel import SQLModel
 
-from main import User
+from app.models.user import User
+from app.database import engine
 
 from alembic import context
 
@@ -72,7 +72,7 @@ def run_migrations_online() -> None:
     if not url:
         raise ValueError("DATABASE_URL environment variable not set")
 
-    connectable = create_engine(url, poolclass=pool.NullPool)
+    connectable = engine
 
     with connectable.connect() as connection:
         context.configure(connection=connection, target_metadata=target_metadata)
