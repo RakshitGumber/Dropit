@@ -8,7 +8,11 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-DATABASE_URL = "postgresql://neondb_owner:nsVS6jxAI2Pw@ep-weathered-fog-a4dwgj3a-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
+DATABASE_URL = os.environ.get("DATABASE_URL")
+
+if DATABASE_URL == None:
+    raise ValueError("DATABASE_URL environment variable not set")
+
 
 engine = create_engine(DATABASE_URL, echo=True)
 
