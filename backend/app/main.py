@@ -1,33 +1,20 @@
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi_sqlalchemy import DBSessionMiddleware
-import os
+from sqlmodel import SQLModel
 
-
-from dotenv import load_dotenv
-
-load_dotenv()
-
+from app.database import engine
+from app.routes import user as user_routes
 
 app = FastAPI()
 
-DATABASE_URL = os.environ["DATABASE_URL"]
-app.add_middleware(DBSessionMiddleware, db_url=DATABASE_URL)
 
-origins = [
-    "http://localhost",
-    "http://localhost:5173",
-    "https://dropit-kappa.vercel.app/",
-]
+@app.on_event("startup")
+def on_startup():
+    SQLModel.metadata.create_all(engine)
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
-from .routers.route import router
+@app.get("/")
+def root_route():
+    return {"Ping": "Pong"}
 
-app.include_router(router)
+
+app.include_router(user_routes.router)
