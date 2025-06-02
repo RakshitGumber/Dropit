@@ -3,6 +3,9 @@ from pydantic import BaseModel
 from sqlmodel import select, Session
 from passlib.context import CryptContext
 
+from app.logger import logger
+
+
 from app.models.user import User
 from app.database import get_session
 
@@ -23,23 +26,31 @@ class CreateUser(BaseModel):
 
 @router.post("/", response_model=User)
 def create_user(user: CreateUser, session: Session = Depends(get_session)):
+    logger.info(f"Creating user: {user.username}")
+
     db_user = session.exec(select(User).where(User.username == user.username)).first()
     if db_user:
+        logger.warning(f"Username '{user.username}' already exists.")
         raise HTTPException(status_code=400, detail="Username already registered")
 
-    existing_email = session.exec(select(User).where(User.email == user.email)).first()
-    if existing_email:
-        raise HTTPException(status_code=400, detail="Email already registered")
+    try:
+        hashed_password = hash_password(user.password)
+        new_user = User(
+            username=user.username, email=user.email, password_hashed=hashed_password
+        )
 
-    hashed_password = hash_password(user.password)
-    new_user = User(
-        username=user.username, email=user.email, password_hashed=hashed_password
-    )
+        session.add(new_user)
+        session.commit()
+        session.refresh(new_user)
 
-    session.add(new_user)
-    session.commit()
-    session.refresh(new_user)
-    return new_user
+        logger.info(f"User created successfully: {new_user.username}")
+        return new_user
+
+    except Exception as e:
+        logger.exception(f"Unexpected error while creating user: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail="An error occurred while creating the user."
+        )
 
 
 @router.get("/{user_id}", response_model=User)
