@@ -1,6 +1,5 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
-import { ThemeProvider } from "./providers/ThemeProvider";
 import { ReactFlowProvider } from "@xyflow/react";
 import "./index.css";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
@@ -20,11 +19,9 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-      <ThemeProvider defaultTheme="dark">
-        <ReactFlowProvider>
-          <RouterProvider router={router} />
-        </ReactFlowProvider>
-      </ThemeProvider>
+      <ReactFlowProvider>
+        <RouterProvider router={router} />
+      </ReactFlowProvider>
     </StrictMode>
   );
 }

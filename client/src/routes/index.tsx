@@ -1,46 +1,51 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-
-import { postName } from "@/api";
+import * as api from "../api";
 
 export const Route = createFileRoute("/")({
   component: RouteComponent,
 });
 
-function RouteComponent() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+interface LoginResponse {
+  username: string;
+  password: string;
+  email: string;
+}
 
-  const submitForm = () => {
-    if (name !== "" && email !== "")
-      console.log("Name:", name, "Email:", email);
-    postName(name, email).then((res) => console.log(res));
+function RouteComponent() {
+  const [data, setData] = useState<LoginResponse>({
+    username: "",
+    password: "",
+    email: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const submitForm = async () => {
+    const user = await api.createUser(data);
+    console.log(user, data);
   };
 
   return (
-    <form
-      className="flex flex-col gap-4 p-4 border rounded-sm w-64 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-card shadow-lg"
-      onSubmit={(e) => {
-        e.preventDefault();
-        submitForm();
-      }}
-    >
-      <Label>Name</Label>
-      <Input
-        type="text"
-        placeholder="Name"
-        onBlur={(e) => setName(e.target.value)}
-      ></Input>
-      <Label>Email</Label>
-      <Input
-        type="email"
-        placeholder="Email"
-        onBlur={(e) => setEmail(e.target.value)}
-      ></Input>
-      <Button type="submit">Submit</Button>
-    </form>
+    <>
+      <label htmlFor="username">Username</label>
+      <input type="text" name="username" onChange={(e) => handleChange(e)} />
+      <label htmlFor="email">Email</label>
+      <input type="email" name="email" onChange={(e) => handleChange(e)} />
+      <label htmlFor="password">Password</label>
+      <input
+        type="password"
+        name="password"
+        onChange={(e) => handleChange(e)}
+      />
+      <button onClick={submitForm}>Send</button>
+    </>
   );
 }
