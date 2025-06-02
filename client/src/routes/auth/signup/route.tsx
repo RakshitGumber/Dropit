@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import * as api from "../api";
+import * as api from "@/api";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/auth/signup")({
   component: RouteComponent,
 });
 
