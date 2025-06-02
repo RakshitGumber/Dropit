@@ -1,10 +1,26 @@
 import { Background, Controls, MiniMap, ReactFlow } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
+import { shallow } from "zustand/shallow";
+
+import TextNode from "@/node/text-node";
+
 import { useFlowStore } from "@/store/store";
+// @ts-ignore
+
+const selector = (store) => ({
+  nodes: store.nodes,
+  edges: store.edges,
+  onNodesChange: store.onNodesChange,
+  onEdgesChange: store.onEdgesChange,
+  addEdge: store.addEdge,
+});
+
+const nodeTypes = {
+  text: TextNode,
+};
 
 const FlowLayout = () => {
-  const { nodes, edges, onNodesChange, onEdgesChange, onConnect } =
-    useFlowStore();
+  const store = useFlowStore(selector, shallow);
 
   return (
     <div
@@ -12,11 +28,12 @@ const FlowLayout = () => {
       style={{ width: "100vw", height: "calc(100vh - 70px)" }}
     >
       <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
+        nodes={store.nodes}
+        edges={store.edges}
+        nodeTypes={nodeTypes}
+        onNodesChange={store.onNodesChange}
+        onEdgesChange={store.onEdgesChange}
+        onConnect={store.addEdge}
         fitView
       >
         <Controls />
