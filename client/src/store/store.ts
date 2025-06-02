@@ -16,20 +16,15 @@ interface FlowState {
   onEdgesChange: (changes: any) => void;
   onConnect: (connection: Connection) => void;
   addEdge: (data: Omit<Edge, "id">) => void;
+  updateNode: () => void;
+  setNodes: (nodes: Node[]) => void;
+  setEdges: (edges: Edge[]) => void;
+  addNode: (node: Node) => void;
 }
 
 export const useFlowStore = createWithEqualityFn<FlowState>(
   (set, get) => ({
-    nodes: [
-      {
-        id: "a",
-        type: "text",
-        data: { label: "text" },
-        position: { x: 0, y: 0 },
-      },
-      { id: "b", data: { label: "text" }, position: { x: 50, y: 50 } },
-      { id: "c", data: { label: "text" }, position: { x: -50, y: 100 } },
-    ],
+    nodes: [],
     edges: [],
     onNodesChange: (changes) =>
       set({ nodes: applyNodeChanges(changes, get().nodes) }),
@@ -50,6 +45,10 @@ export const useFlowStore = createWithEqualityFn<FlowState>(
         ),
       });
     },
+    setNodes: (nodes: Node[]) => set({ nodes }),
+    setEdges: (edges: Edge[]) => set({ edges }),
+    addNode: (node: Node) =>
+      set((state) => ({ nodes: [...state.nodes, node] })),
   }),
   Object.is
 );
