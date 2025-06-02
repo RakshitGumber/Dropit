@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Handle, NodeResizer, Position } from "@xyflow/react";
+import "./node.scss";
 
 // Define the handle interface
 interface HandleData {
@@ -42,7 +43,7 @@ export const Node: React.FC<NodeProps> = ({
   const [display] = useState(true);
 
   return (
-    <div className="" style={style}>
+    <div className="node" style={style}>
       {resizable && (
         <NodeResizer
           color="#ff0071"
@@ -105,7 +106,7 @@ interface NodeHeaderProps {
 }
 
 export const NodeHeader: React.FC<NodeHeaderProps> = ({ children }) => {
-  return <div className="">{children}</div>;
+  return <div className="node-header">{children}</div>;
 };
 
 // Define NodeContent props interface
@@ -115,7 +116,7 @@ interface NodeContentProps {
 }
 
 export const NodeContent: React.FC<NodeContentProps> = ({ children }) => {
-  return <div className="">{children}</div>;
+  return <div className="node-content">{children}</div>;
 };
 
 // Define NodeTemplate props interface
@@ -130,7 +131,7 @@ interface NodeTemplateProps {
 
 export const NodeTemplate: React.FC<NodeTemplateProps> = (props) => {
   return (
-    <Node className="" target={props.target} source={props.source}>
+    <Node target={props.target} source={props.source}>
       <NodeHeader>{props.title}</NodeHeader>
       <NodeContent>{props.content}</NodeContent>
     </Node>
