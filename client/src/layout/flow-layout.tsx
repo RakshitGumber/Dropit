@@ -1,50 +1,10 @@
-import {
-  addEdge,
-  Background,
-  Controls,
-  MiniMap,
-  ReactFlow,
-  useEdgesState,
-  useNodesState,
-} from "@xyflow/react";
+import { Background, Controls, MiniMap, ReactFlow } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import { useCallback } from "react";
-
-const initialNodes = [
-  {
-    id: "1",
-    type: "input",
-    data: { label: "Input Node" },
-    position: { x: 250, y: 25 },
-  },
-
-  {
-    id: "2",
-    // you can also pass a React component as a label
-    data: { label: <div>Default Node</div> },
-    position: { x: 100, y: 125 },
-  },
-  {
-    id: "3",
-    type: "output",
-    data: { label: "Output Node" },
-    position: { x: 250, y: 250 },
-  },
-];
-const initialEdges = [
-  { id: "e1-2", source: "1", target: "2" },
-  { id: "e2-3", source: "2", target: "3", animated: true },
-];
+import { useFlowStore } from "@/store/store";
 
 const FlowLayout = () => {
-  const [nodes, _, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-
-  const onConnect = useCallback(
-    // @ts-ignore
-    (params) => setEdges((eds) => addEdge(params, eds)),
-    [setEdges]
-  );
+  const { nodes, edges, onNodesChange, onEdgesChange, onConnect } =
+    useFlowStore();
 
   return (
     <div
@@ -57,6 +17,7 @@ const FlowLayout = () => {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        fitView
       >
         <Controls />
         <MiniMap />
