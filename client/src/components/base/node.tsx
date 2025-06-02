@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { cn } from "../../lib/utils";
 import { Handle, NodeResizer, Position } from "@xyflow/react";
 
 // Define the handle interface
@@ -30,7 +29,6 @@ interface Dimensions {
 
 export const Node: React.FC<NodeProps> = ({
   children,
-  className,
   target,
   source,
   style,
@@ -44,10 +42,7 @@ export const Node: React.FC<NodeProps> = ({
   const [display] = useState(true);
 
   return (
-    <div
-      className={cn("w-full h-full bg-card border rounded-lg", className)}
-      style={style}
-    >
+    <div className="" style={style}>
       {resizable && (
         <NodeResizer
           color="#ff0071"
@@ -109,20 +104,8 @@ interface NodeHeaderProps {
   className?: string;
 }
 
-export const NodeHeader: React.FC<NodeHeaderProps> = ({
-  children,
-  className,
-}) => {
-  return (
-    <div
-      className={cn(
-        "flex flex-col space-y-1.5 px-6 py-3 font-semibold relative",
-        className
-      )}
-    >
-      {children}
-    </div>
-  );
+export const NodeHeader: React.FC<NodeHeaderProps> = ({ children }) => {
+  return <div className="">{children}</div>;
 };
 
 // Define NodeContent props interface
@@ -131,11 +114,8 @@ interface NodeContentProps {
   className?: string;
 }
 
-export const NodeContent: React.FC<NodeContentProps> = ({
-  children,
-  className,
-}) => {
-  return <div className={cn("p-6 pt-0", className)}>{children}</div>;
+export const NodeContent: React.FC<NodeContentProps> = ({ children }) => {
+  return <div className="">{children}</div>;
 };
 
 // Define NodeTemplate props interface
@@ -150,11 +130,7 @@ interface NodeTemplateProps {
 
 export const NodeTemplate: React.FC<NodeTemplateProps> = (props) => {
   return (
-    <Node
-      className={cn(props.className)}
-      target={props.target}
-      source={props.source}
-    >
+    <Node className="" target={props.target} source={props.source}>
       <NodeHeader>{props.title}</NodeHeader>
       <NodeContent>{props.content}</NodeContent>
     </Node>

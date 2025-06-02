@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { ReactFlowProvider } from "@xyflow/react";
-import "./index.css";
+import "@/stylesheets/main.scss";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 
 import { routeTree } from "./routeTree.gen";
