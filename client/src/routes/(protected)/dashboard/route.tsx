@@ -1,3 +1,4 @@
+import FlowLayout from "@/layout/flow-layout";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/(protected)/dashboard")({
@@ -5,5 +6,9 @@ export const Route = createFileRoute("/(protected)/dashboard")({
 });
 
 function RouteComponent() {
-  return <div>Hello "/(protected)/dashboard"!</div>;
+  return (
+    <>
+      <FlowLayout />
+    </>
+  );
 }
