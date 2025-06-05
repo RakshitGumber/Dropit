@@ -46,6 +46,27 @@ function RouteComponent() {
         onChange={(e) => handleChange(e)}
       />
       <button onClick={submitForm}>Send</button>
+
+      <section style={{ background: "#F8F9FA", padding: "2rem" }}>
+        <header>
+          <h1>Welcome to Otaku World</h1>
+          <p>
+            Discover top-rated anime, latest blogs, and fan theories curated
+            with style.
+          </p>
+          <button class="btn primary">Explore Blogs</button>
+          <button class="btn cta">Join Community</button>
+        </header>
+
+        <div class="card">
+          <div class="tag">Featured</div>
+          <h2>Top Anime of the Week</h2>
+          <p>
+            Explore this week's most loved anime shows, handpicked by our
+            editorial team!
+          </p>
+        </div>
+      </section>
     </>
   );
 }
