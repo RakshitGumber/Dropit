@@ -7,6 +7,7 @@
   height: 56px;
   padding: 16px 27px;
   font-size: 14px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 
   .header-content {
     display: flex;
@@ -17,7 +18,7 @@
     .nav-right {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
 
       .notifs {
         display: flex;
@@ -33,12 +34,13 @@
           width: 24px;
           background: none;
           border: 1px solid rgba(0, 0, 0, 0.3);
-          border-radius: 20%;
+          border-radius: 5px;
           color: #181f2e;
           font-size: 16px;
           cursor: pointer;
           transition: all 100ms ease-in-out;
           position: relative;
+          box-shadow: var(--shadow);
 
           &:hover {
             background-color: rgba(0, 0, 0, 0.1);
@@ -54,6 +56,31 @@
             right: 0;
             transform: translate(40%, -40%);
           }
+        }
+      }
+
+      .account {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        .signup-button {
+          max-width: 200px;
+          display: flex;
+          overflow: hidden;
+          position: relative;
+          padding: 8px 16px;
+          background-color: var(--accent);
+          color: var(--bg-color);
+          font-size: 14px;
+          white-space: nowrap;
+          font-weight: 600;
+          text-transform: uppercase;
+          cursor: pointer;
+          align-items: center;
+          border-radius: 5px;
+          border: none;
+          box-shadow: var(--shadow);
         }
       }
     }

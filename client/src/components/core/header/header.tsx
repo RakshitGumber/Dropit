@@ -10,7 +10,7 @@ const header = () => {
             <button className="notif-button">
               <Icon icon="si:mail-line" />
             </button>
-            <button className="notif-button highlight">
+            <button className="notif-button">
               <Icon icon="si:notifications-thick-line" />
             </button>
           </div>
