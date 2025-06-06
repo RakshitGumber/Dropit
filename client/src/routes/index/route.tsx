@@ -8,9 +8,7 @@ export const Route = createFileRoute("/")({
 function RouteComponent() {
   return (
     <>
-      <div className="hero">
-        <h1>Dropit</h1>
-      </div>
+      <div className="hero"></div>
     </>
   );
 }

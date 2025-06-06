@@ -9,6 +9,7 @@
     "start": "vite start"
   },
   "dependencies": {
+    "@iconify/react": "^6.0.0",
     "@radix-ui/react-label": "^2.1.1",
     "@radix-ui/react-slot": "",
     "@tanstack/react-router": "^1.97.3",
