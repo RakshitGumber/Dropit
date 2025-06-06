@@ -1,10 +1,26 @@
 import { Icon } from "@iconify/react";
 import "./header.scss";
 
-const header = () => {
+interface HeaderProps {
+  isSidebarOpen: boolean;
+}
+
+const header: React.FC<HeaderProps> = ({ isSidebarOpen }) => {
   return (
-    <header className="header">
+    <header
+      className="header"
+      style={
+        isSidebarOpen
+          ? { width: "calc(100vw - 270px)" }
+          : { width: "calc(100vw - 56px)" }
+      }
+    >
       <div className="header-content">
+        {!isSidebarOpen && (
+          <div className="logo">
+            <h1>FlowPilot</h1>
+          </div>
+        )}
         <div className="nav-right">
           <div className="notifs">
             <button className="notif-button">
