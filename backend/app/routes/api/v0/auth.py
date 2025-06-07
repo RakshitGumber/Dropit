@@ -51,11 +51,16 @@ def signup_user(user: CreateUser, session: Session = Depends(get_session)):
         )
 
 
+class LoginUser(BaseModel):
+    email: str
+    password: str
+
+
 # Add logging and try except
 @router.post("/login")
-def login(email: str, password: str, session: Session = Depends(get_session)):
-    user = session.exec(select(User).where(User.email == email)).first()
-    if not user or not verify_password(password, user.password_hashed):
+def login(user: LoginUser, session: Session = Depends(get_session)):
+    db_user = session.exec(select(User).where(User.email == user.email)).first()
+    if not db_user or not verify_password(user.password, db_user.password_hashed):
         raise HTTPException(status_code=401, detail="Invalid creds")
     return {"access_token": create_access_token({"sub": user.email})}
 

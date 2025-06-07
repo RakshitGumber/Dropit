@@ -13,4 +13,5 @@ export const signupUser = (data: {
   password: string;
 }) => api.post("/auth/signup", data);
 
-export const loginUser = (data: any) => api.post("/auth/login", data);
+export const loginUser = (data: { email: string; password: string }) =>
+  api.post("/auth/login", data);
