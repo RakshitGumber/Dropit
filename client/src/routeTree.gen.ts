@@ -15,6 +15,7 @@ import { Route as IndexRouteImport } from './routes/index/route'
 import { Route as AuthSignupRouteImport } from './routes/auth/signup/route'
 import { Route as AuthLoginRouteImport } from './routes/auth/login/route'
 import { Route as protectedDashboardRouteImport } from './routes/(protected)/dashboard/route'
+import { Route as protectedFlowIdImport } from './routes/(protected)/flow/$id'
 
 // Create/Update Routes
 
@@ -39,6 +40,12 @@ const AuthLoginRouteRoute = AuthLoginRouteImport.update({
 const protectedDashboardRouteRoute = protectedDashboardRouteImport.update({
   id: '/(protected)/dashboard',
   path: '/dashboard',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const protectedFlowIdRoute = protectedFlowIdImport.update({
+  id: '/(protected)/flow/$id',
+  path: '/flow/$id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -74,6 +81,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignupRouteImport
       parentRoute: typeof rootRoute
     }
+    '/(protected)/flow/$id': {
+      id: '/(protected)/flow/$id'
+      path: '/flow/$id'
+      fullPath: '/flow/$id'
+      preLoaderRoute: typeof protectedFlowIdImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -84,6 +98,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof protectedDashboardRouteRoute
   '/auth/login': typeof AuthLoginRouteRoute
   '/auth/signup': typeof AuthSignupRouteRoute
+  '/flow/$id': typeof protectedFlowIdRoute
 }
 
 export interface FileRoutesByTo {
@@ -91,6 +106,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof protectedDashboardRouteRoute
   '/auth/login': typeof AuthLoginRouteRoute
   '/auth/signup': typeof AuthSignupRouteRoute
+  '/flow/$id': typeof protectedFlowIdRoute
 }
 
 export interface FileRoutesById {
@@ -99,19 +115,21 @@ export interface FileRoutesById {
   '/(protected)/dashboard': typeof protectedDashboardRouteRoute
   '/auth/login': typeof AuthLoginRouteRoute
   '/auth/signup': typeof AuthSignupRouteRoute
+  '/(protected)/flow/$id': typeof protectedFlowIdRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/auth/login' | '/auth/signup'
+  fullPaths: '/' | '/dashboard' | '/auth/login' | '/auth/signup' | '/flow/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/auth/login' | '/auth/signup'
+  to: '/' | '/dashboard' | '/auth/login' | '/auth/signup' | '/flow/$id'
   id:
     | '__root__'
     | '/'
     | '/(protected)/dashboard'
     | '/auth/login'
     | '/auth/signup'
+    | '/(protected)/flow/$id'
   fileRoutesById: FileRoutesById
 }
 
@@ -120,6 +138,7 @@ export interface RootRouteChildren {
   protectedDashboardRouteRoute: typeof protectedDashboardRouteRoute
   AuthLoginRouteRoute: typeof AuthLoginRouteRoute
   AuthSignupRouteRoute: typeof AuthSignupRouteRoute
+  protectedFlowIdRoute: typeof protectedFlowIdRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -127,6 +146,7 @@ const rootRouteChildren: RootRouteChildren = {
   protectedDashboardRouteRoute: protectedDashboardRouteRoute,
   AuthLoginRouteRoute: AuthLoginRouteRoute,
   AuthSignupRouteRoute: AuthSignupRouteRoute,
+  protectedFlowIdRoute: protectedFlowIdRoute,
 }
 
 export const routeTree = rootRoute
@@ -142,7 +162,8 @@ export const routeTree = rootRoute
         "/",
         "/(protected)/dashboard",
         "/auth/login",
-        "/auth/signup"
+        "/auth/signup",
+        "/(protected)/flow/$id"
       ]
     },
     "/": {
@@ -156,6 +177,9 @@ export const routeTree = rootRoute
     },
     "/auth/signup": {
       "filePath": "auth/signup/route.tsx"
+    },
+    "/(protected)/flow/$id": {
+      "filePath": "(protected)/flow/$id.tsx"
     }
   }
 }
