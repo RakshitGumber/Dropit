@@ -7,4 +7,6 @@ const api = axios.create({
   },
 });
 
-export const createUser = (data: any) => api.post("/users", data);
+export const signupUser = (data: any) => api.post("/auth/signup", data);
+
+export const loginUser = (data: any) => api.post("/auth/login", data);
