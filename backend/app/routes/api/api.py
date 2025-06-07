@@ -4,7 +4,6 @@ from app.routes.api.v0 import v0
 
 router = APIRouter()
 
-router.include_router(v0.router, prefix="/v0")
 router.include_router(v0.router)
 
 

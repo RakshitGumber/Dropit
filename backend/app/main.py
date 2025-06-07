@@ -4,7 +4,6 @@ from fastapi.responses import JSONResponse
 from sqlmodel import SQLModel
 
 from app.database import engine
-from app.routes import user as user_routes
 
 from fastapi.middleware.cors import CORSMiddleware
 

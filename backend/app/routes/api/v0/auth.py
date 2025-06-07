@@ -5,8 +5,8 @@ from sqlmodel import Session, select
 
 from app.database import get_session
 from app.logger import logger
-from backend.app.models.user import User
-from backend.app.utils.auth import create_access_token, hash_password, verify_password
+from app.models.user import User
+from app.utils.auth import create_access_token, hash_password, verify_password
 
 router = APIRouter(tags=["auth"])
 
@@ -15,6 +15,11 @@ class CreateUser(BaseModel):
     username: str
     password: str
     email: str
+
+
+@router.get("/signup")
+def auth_root():
+    return {"Message": "Hello"}
 
 
 @router.post("/signup")

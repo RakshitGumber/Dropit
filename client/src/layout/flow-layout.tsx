@@ -14,7 +14,7 @@ import "@xyflow/react/dist/style.css";
 import { TextNode } from "@/node/text";
 import { OutputNode } from "@/node/output";
 
-import { useFlowStore } from "@/store/store";
+import { useFlowStore } from "@/store/flowStore";
 import { useCallback } from "react";
 // @ts-ignore
 
