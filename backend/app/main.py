@@ -14,6 +14,8 @@ from app.logger import logger
 from app.middlewares.logRequest import LogRequestsMiddleware
 import traceback
 
+from app.routes import router
+
 
 app = FastAPI()
 
@@ -63,10 +65,5 @@ def on_startup():
     SQLModel.metadata.create_all(engine)
 
 
-@app.get("/")
-def root_route():
-    return {"Ping": "Pong"}
-
-
 app.add_middleware(LogRequestsMiddleware)
-app.include_router(user_routes.router)
+app.include_router(router.main_router)
