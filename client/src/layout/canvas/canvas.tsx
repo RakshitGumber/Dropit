@@ -1,111 +1,165 @@
-import { OutputNode } from "@/node/output";
-import { TextNode } from "@/node/text";
-import { useFlowStore } from "@/store/flowStore";
+import { useCallback, useState } from "react";
 import {
-  addEdge,
   Background,
   Controls,
-  Edge,
-  MiniMap,
+  Node,
+  Connection,
+  ReactFlowInstance,
   ReactFlow,
-  useEdgesState,
-  useNodesState,
   useReactFlow,
+  useNodesState,
+  useEdgesState,
+  addEdge,
 } from "@xyflow/react";
+
+import { useFlowStore } from "@/store/flowStore";
+
 import "@xyflow/react/dist/style.css";
 
-import { useCallback } from "react";
+import { getNodetypes } from "@/registry";
 
-const nodeTypes = {
-  text: TextNode,
-  output: OutputNode,
-};
+const gridSize = 25;
+const proOptions = { hideAttribution: true };
+
+interface NodeData {
+  id: string;
+  nodeType: string;
+  [key: string]: any;
+}
+
+const nodeTypes: any = Object.fromEntries(getNodetypes());
+
+// const selector = (state: any): StoreSelector => ({
+//   nodes: state.nodes,
+//   edges: state.edges,
+//   getNodeID: state.getNodeID,
+//   addNode: state.addNode,
+//   onNodesChange: state.onNodesChange,
+//   onEdgesChange: state.onEdgesChange,
+//   onConnect: state.onConnect,
+// });
+
+// interface StoreSelector {
+//   nodes: Node<NodeData>[];
+//   edges: Edge[];
+//   getNodeID: (type: string) => string;
+//   addNode: (node: Node<NodeData>) => void;
+//   onNodesChange: OnNodesChange;
+//   onEdgesChange: OnEdgesChange;
+//   onConnect: (connection: Connection) => void;
+// }
 
 const Canvas = () => {
-  const { nodes, edges } = useFlowStore();
-  const [rfNodes, setRfNodes, onNodesChange] = useNodesState(nodes);
-  const [rfEdges, setRfEdges, onEdgesChange] = useEdgesState(edges);
-  const { getZoom, getViewport } = useReactFlow(); // ✅ Will work now
+  const { screenToFlowPosition } = useReactFlow();
+  const [_, setReactFlowInstance] = useState<ReactFlowInstance | null>(null);
+
+  // Get initial data from store
+  const { nodes: storeNodes, edges: storeEdges } = useFlowStore();
+
+  // Use ReactFlow's local state for reactivity
+  const [nodes, setNodes, onNodesChange] = useNodesState(storeNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(storeEdges);
 
   const onConnect = useCallback(
-    (params: Edge) => setRfEdges((eds) => addEdge(params, eds)),
-    [setRfEdges]
+    (params: Connection) => setEdges((eds) => addEdge(params, eds)),
+    [setEdges]
   );
 
   const onDrop = useCallback(
-    (event: React.DragEvent) => {
+    (event: React.DragEvent<HTMLDivElement>) => {
       event.preventDefault();
-      const type = event.dataTransfer.getData("application/reactflow");
-      if (!type) return;
 
-      const bounds = event.currentTarget.getBoundingClientRect();
-      const clientX = event.clientX - bounds.left;
-      const clientY = event.clientY - bounds.top;
+      const dataTransfer = event.dataTransfer?.getData("application/reactflow");
+      if (!dataTransfer) return;
 
-      const zoom = getZoom();
-      const { x, y } = getViewport();
+      try {
+        // Try to parse as JSON first
+        let type;
+        try {
+          const appData = JSON.parse(dataTransfer);
+          type = appData?.nodeType;
+        } catch {
+          // Fallback to string-based approach
+          type = dataTransfer;
+        }
 
-      const position = {
-        x: (clientX - x) / zoom,
-        y: (clientY - y) / zoom,
-      };
+        if (!type) return;
 
-      const id = `${+new Date()}`;
-      const newNode = {
-        id,
-        type,
-        position,
-        data:
-          type === "text"
-            ? {
-                value: "",
-                onChange: (val: string) => {
-                  setRfNodes((nds) =>
-                    nds.map((n) =>
-                      n.id === id
-                        ? { ...n, data: { ...n.data, value: val } }
-                        : n
-                    )
-                  );
+        const position = screenToFlowPosition({
+          x: event.clientX,
+          y: event.clientY,
+        });
+
+        const id = `${type}-${Date.now()}`;
+        const newNode: Node<NodeData> = {
+          id,
+          type,
+          position,
+          data:
+            type === "text"
+              ? {
+                  id,
+                  nodeType: type,
+                  value: "",
+                  onChange: (val: string) => {
+                    setNodes((nds) =>
+                      nds.map((n) =>
+                        n.id === id
+                          ? { ...n, data: { ...n.data, value: val } }
+                          : n
+                      )
+                    );
+                  },
+                }
+              : {
+                  id,
+                  nodeType: type,
+                  inputValue: "Connect input",
                 },
-              }
-            : {
-                inputValue: "Connect input",
-              },
-      };
+        };
 
-      setRfNodes((nds) => nds.concat(newNode));
+        setNodes((nds) => nds.concat(newNode));
+      } catch (error) {
+        console.error("Error parsing drag data:", error);
+      }
     },
-    [getZoom, getViewport, setRfNodes]
+    [screenToFlowPosition, setNodes]
   );
 
-  const onDragOver = useCallback((event: React.DragEvent) => {
+  const onDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
   }, []);
 
   return (
-    <div style={{ width: "100%", height: "calc(100vh - 70px)" }}>
-      <button onClick={() => useFlowStore.getState().saveFlow("My Flow")}>
-        Save Flow
-      </button>
-      <ReactFlow
-        nodes={rfNodes}
-        edges={rfEdges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        // @ts-ignore
-        onConnect={onConnect}
-        onDrop={onDrop}
-        onDragOver={onDragOver}
-        nodeTypes={nodeTypes}
-        fitView
-      >
-        <Background />
-        <MiniMap />
-        <Controls />
-      </ReactFlow>
-    </div>
+    <>
+      <div style={{ width: "100%", height: "calc(100vh - 70px)" }}>
+        <button onClick={() => useFlowStore.getState().saveFlow("My Flow")}>
+          Save Flow
+        </button>
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          onDrop={onDrop}
+          onDragOver={onDragOver}
+          onInit={setReactFlowInstance}
+          nodeTypes={nodeTypes}
+          proOptions={proOptions}
+          snapGrid={[gridSize, gridSize]}
+          fitView
+        >
+          <Background gap={gridSize} />
+          <Controls
+            position="top-right"
+            orientation="horizontal"
+            className="text-black border-4 border-card shadow-lg shadow-black/50"
+          />
+        </ReactFlow>
+      </div>
+    </>
   );
 };
 
