@@ -20,6 +20,7 @@ interface FlowState {
   setNodes: (nodes: Node[]) => void;
   setEdges: (edges: Edge[]) => void;
   addNode: (node: Node) => void;
+  addTextNode: () => void;
 }
 
 export const useFlowStore = createWithEqualityFn<FlowState>(
@@ -49,6 +50,19 @@ export const useFlowStore = createWithEqualityFn<FlowState>(
     setEdges: (edges: Edge[]) => set({ edges }),
     addNode: (node: Node) =>
       set((state) => ({ nodes: [...state.nodes, node] })),
+    addTextNode: () =>
+      set((state) => ({
+        nodes: [
+          ...state.nodes,
+          {
+            id: nanoid(),
+            type: "default",
+            position: { x: Math.random() * 250, y: Math.random() * 250 },
+            data: { label: "Text Node" },
+          },
+        ],
+      })),
   }),
+
   Object.is
 );

@@ -4,6 +4,7 @@ const FlowEditor = () => {
   return (
     <div>
       <Toolbar />
+      <Canvas />
     </div>
   );
 };
