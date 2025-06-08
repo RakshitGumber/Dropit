@@ -86,6 +86,9 @@ const Canvas = () => {
 
   return (
     <div style={{ width: "100%", height: "calc(100vh - 70px)" }}>
+      <button onClick={() => useFlowStore.getState().saveFlow("My Flow")}>
+        Save Flow
+      </button>
       <ReactFlow
         nodes={rfNodes}
         edges={rfEdges}

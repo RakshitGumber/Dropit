@@ -1,6 +1,9 @@
+from fastapi import Depends
 from passlib.context import CryptContext
-from jose import jwt, JWTError
+from jose import jwt
 from datetime import datetime, timedelta
+
+from sqlmodel import Session
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

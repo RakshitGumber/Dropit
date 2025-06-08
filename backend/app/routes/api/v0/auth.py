@@ -62,7 +62,7 @@ def login(user: LoginUser, session: Session = Depends(get_session)):
     db_user = session.exec(select(User).where(User.email == user.email)).first()
     if not db_user or not verify_password(user.password, db_user.password_hashed):
         raise HTTPException(status_code=401, detail="Invalid creds")
-    return {"access_token": create_access_token({"sub": user.email})}
+    return {"access_token": create_access_token({"sub": user.email}), "user": db_user}
 
 
 @router.get("/{user_id}", response_model=User)

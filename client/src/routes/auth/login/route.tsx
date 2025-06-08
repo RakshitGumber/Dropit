@@ -20,7 +20,7 @@ function RouteComponent() {
   });
   const [_, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const setToken = useAuthStore((state) => state.setToken);
+  const { setToken, setUser } = useAuthStore((state) => state);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -39,6 +39,10 @@ function RouteComponent() {
       const response = await api.loginUser(data);
       if (response.status === 200) {
         setToken(response.data.access_token);
+        setUser({
+          username: response.data.user.username,
+          user_id: response.data.user.id,
+        });
         navigate({ to: "/dashboard" });
       }
     } catch (err: any) {

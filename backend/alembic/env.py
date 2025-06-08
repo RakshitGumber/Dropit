@@ -3,6 +3,7 @@ from logging.config import fileConfig
 from sqlmodel import SQLModel
 
 from app.models.user import User
+from app.models.flow import Flow
 from app.database import engine
 
 from alembic import context
