@@ -8,23 +8,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   setIsSidebarOpen,
 }) => {
   return (
-    <div
-      style={
-        isSidebarOpen
-          ? {
-              float: "left",
-              width: "270px",
-              borderRight: "1px solid rgba(0, 0, 0, 0.2)",
-              height: "100vh",
-            }
-          : {
-              float: "left",
-              width: "56px",
-              borderRight: "1px solid rgba(0, 0, 0, 0.2)",
-              height: "100vh",
-            }
-      }
-    >
+    <div>
       {isSidebarOpen ? (
         <>
           Open <button onClick={() => setIsSidebarOpen(false)}>cls</button>

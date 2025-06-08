@@ -1,21 +1,14 @@
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
-from sqlmodel import select, Session
-from passlib.context import CryptContext
-
-from app.logger import logger
+from sqlmodel import Session, select
 
 
-from app.models.user import User
 from app.database import get_session
+from app.logger import logger
+from app.models.user import User
+from app.utils.auth import create_access_token, hash_password, verify_password
 
-router = APIRouter(prefix="/users", tags=["Users"])
-
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-
-def hash_password(password: str) -> str:
-    return pwd_context.hash(password)
+router = APIRouter(tags=["auth"])
 
 
 class CreateUser(BaseModel):
@@ -24,8 +17,13 @@ class CreateUser(BaseModel):
     email: str
 
 
-@router.post("/", response_model=User)
-def create_user(user: CreateUser, session: Session = Depends(get_session)):
+@router.get("/signup")
+def auth_root():
+    return {"Message": "Hello"}
+
+
+@router.post("/signup")
+def signup_user(user: CreateUser, session: Session = Depends(get_session)):
     logger.info(f"Creating user: {user.username}")
 
     db_user = session.exec(select(User).where(User.username == user.username)).first()
@@ -51,6 +49,20 @@ def create_user(user: CreateUser, session: Session = Depends(get_session)):
         raise HTTPException(
             status_code=500, detail="An error occurred while creating the user."
         )
+
+
+class LoginUser(BaseModel):
+    email: str
+    password: str
+
+
+# Add logging and try except
+@router.post("/login")
+def login(user: LoginUser, session: Session = Depends(get_session)):
+    db_user = session.exec(select(User).where(User.email == user.email)).first()
+    if not db_user or not verify_password(user.password, db_user.password_hashed):
+        raise HTTPException(status_code=401, detail="Invalid creds")
+    return {"access_token": create_access_token({"sub": user.email}), "user": db_user}
 
 
 @router.get("/{user_id}", response_model=User)

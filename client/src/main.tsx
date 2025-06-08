@@ -1,6 +1,5 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
-import { ReactFlowProvider } from "@xyflow/react";
 import "@/stylesheets/main.scss";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 
@@ -19,9 +18,7 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-      <ReactFlowProvider>
-        <RouterProvider router={router} />
-      </ReactFlowProvider>
+      <RouterProvider router={router} />
     </StrictMode>
   );
 }

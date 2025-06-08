@@ -1,11 +1,14 @@
 import { Icon } from "@iconify/react";
 import "./header.scss";
+import { useNavigate } from "@tanstack/react-router";
 
 interface HeaderProps {
   isSidebarOpen: boolean;
 }
 
 const header: React.FC<HeaderProps> = ({ isSidebarOpen }) => {
+  const navigate = useNavigate();
+
   return (
     <header
       className="header"
@@ -34,7 +37,12 @@ const header: React.FC<HeaderProps> = ({ isSidebarOpen }) => {
             {false ? (
               <div />
             ) : (
-              <button className="signup-button">Sign Up</button>
+              <button
+                className="signup-button"
+                onClick={() => navigate({ to: "/auth/signup" })}
+              >
+                Sign Up
+              </button>
             )}
           </div>
         </div>

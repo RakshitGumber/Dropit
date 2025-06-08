@@ -1,70 +1,31 @@
+import { OutputNode } from "@/node/output";
+import { TextNode } from "@/node/text";
+import { useFlowStore } from "@/store/flowStore";
 import {
-  ReactFlow,
   addEdge,
   Background,
   Controls,
+  Edge,
   MiniMap,
-  useNodesState,
+  ReactFlow,
   useEdgesState,
+  useNodesState,
   useReactFlow,
 } from "@xyflow/react";
-import type { Edge } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 
-import { TextNode } from "@/node/text";
-import { OutputNode } from "@/node/output";
-
-import { useFlowStore } from "@/store/flowStore";
 import { useCallback } from "react";
-// @ts-ignore
-
-const selector = (store) => ({
-  nodes: store.nodes,
-  edges: store.edges,
-  onNodesChange: store.onNodesChange,
-  onEdgesChange: store.onEdgesChange,
-  addEdge: store.addEdge,
-});
 
 const nodeTypes = {
   text: TextNode,
   output: OutputNode,
 };
 
-const Sidebar: React.FC = () => {
-  const handleDragStart = (
-    event: React.DragEvent<HTMLDivElement>,
-    nodeType: string
-  ) => {
-    event.dataTransfer.setData("application/reactflow", nodeType);
-    event.dataTransfer.effectAllowed = "move";
-  };
-
-  return (
-    <aside className="p-4 bg-gray-200 w-48">
-      <div
-        onDragStart={(e) => handleDragStart(e, "text")}
-        draggable
-        className="p-2 bg-white rounded shadow mb-2 cursor-move"
-      >
-        Text Node
-      </div>
-      <div
-        onDragStart={(e) => handleDragStart(e, "output")}
-        draggable
-        className="p-2 bg-white rounded shadow cursor-move"
-      >
-        Output Node
-      </div>
-    </aside>
-  );
-};
-
-const FlowCanvas = () => {
-  const { getZoom, getViewport } = useReactFlow();
+const Canvas = () => {
   const { nodes, edges } = useFlowStore();
   const [rfNodes, setRfNodes, onNodesChange] = useNodesState(nodes);
   const [rfEdges, setRfEdges, onEdgesChange] = useEdgesState(edges);
+  const { getZoom, getViewport } = useReactFlow(); // ✅ Will work now
 
   const onConnect = useCallback(
     (params: Edge) => setRfEdges((eds) => addEdge(params, eds)),
@@ -125,6 +86,9 @@ const FlowCanvas = () => {
 
   return (
     <div style={{ width: "100%", height: "calc(100vh - 70px)" }}>
+      <button onClick={() => useFlowStore.getState().saveFlow("My Flow")}>
+        Save Flow
+      </button>
       <ReactFlow
         nodes={rfNodes}
         edges={rfEdges}
@@ -145,11 +109,4 @@ const FlowCanvas = () => {
   );
 };
 
-const FlowLayout = () => (
-  <div className="flex">
-    <Sidebar />
-    <FlowCanvas />
-  </div>
-);
-
-export default FlowLayout;
+export default Canvas;
