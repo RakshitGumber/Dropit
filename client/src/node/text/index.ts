@@ -1,1 +1,1 @@
-export { default as TextNode } from "./node";
+export { TextNode } from "./node";

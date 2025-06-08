@@ -1,4 +1,10 @@
-import { OutputNode, TextNode } from "@/node";
+import {
+  OutputNode,
+  TextNode,
+  VariableNode,
+  SummarizeNode,
+  GeminiNode,
+} from "@/node";
 import React from "react";
 
 interface DraggableNodesRegistration<T extends Record<string, any>> {
@@ -20,6 +26,13 @@ const registerNode = <T extends Record<string, any>>(
 (() => {
   registerNode({ nodeType: "text", label: "Text", node: TextNode });
   registerNode({ nodeType: "output", label: "Output", node: OutputNode });
+  registerNode({ nodeType: "variable", label: "Variable", node: VariableNode });
+  registerNode({
+    nodeType: "summarize",
+    label: "Summarize",
+    node: SummarizeNode,
+  });
+  registerNode({ nodeType: "gemini", label: "Gemini", node: GeminiNode });
 })();
 
 const getRegistration = (nodeType: string) => {

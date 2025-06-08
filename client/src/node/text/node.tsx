@@ -1,34 +1,81 @@
-import { Node, NodeContent } from "@/components/base";
-import "./text.scss";
+import React, { useState, useEffect } from "react";
+import { Node, NodeHeader, NodeContent } from "@/components/base";
+import {
+  useHandleConnections,
+  useNodesData,
+  useReactFlow,
+} from "@xyflow/react";
 
-import { useState } from "react";
-
-interface InputNodeProps {
-  data: {
-    value: string;
-    onChange: (val: string) => void;
-  };
+interface Parameter {
+  key: string;
+  value: string;
 }
 
-const TextNode: React.FC<InputNodeProps> = ({ data }) => {
-  const [value, setValue] = useState("Text");
-  const [edit, setEdit] = useState(false);
+export const TextNode: React.FC<{
+  id: string;
+  selected: boolean;
+}> = ({ id, selected }): React.ReactElement => {
+  const [value, setValue] = useState("");
+  const [renderValue, setRenderValue] = useState("");
+  const variablesConnections = useHandleConnections({
+    type: "target",
+    id: `${id}-input`,
+  });
+  const variablesData = useNodesData(variablesConnections?.[0]?.source);
+  const { updateNodeData } = useReactFlow();
+
+  const addParameters = (template: string, parameters: Parameter[]) => {
+    return template.replace(/\{\{(.*?)\}\}/g, (match, key) => {
+      const param = parameters.find((param) => param.key === key);
+      if (param) {
+        // Fixed the logical expression that was using bitwise OR
+        return param.value && param.value.length > 0
+          ? param.value
+          : `{{${key}}}`;
+      }
+      return match;
+    });
+  };
+
+  useEffect(() => {
+    const parameters = variablesData?.data?.value;
+    if (Array.isArray(parameters)) {
+      const newVal = addParameters(value, parameters);
+      updateNodeData(id, { value, renderValue: newVal });
+      setRenderValue(newVal);
+    }
+  }, [variablesData?.data?.value, value, id, updateNodeData]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const parameters = variablesData?.data?.value;
+    const newVal = addParameters(
+      e.target.value,
+      Array.isArray(parameters) ? parameters : []
+    );
+    updateNodeData(id, { value: e.target.value, renderValue: newVal });
+    setRenderValue(newVal);
+    setValue(e.target.value);
+  };
 
   return (
-    <Node source={[{ id: "s1" }]}>
-      <NodeContent>
-        {edit ? (
-          <input
-            type="text"
+    <>
+      <Node
+        source={[{ id: `${id}-output` }]}
+        target={[{ id: `${id}-input` }]}
+        selected={selected}
+        resizable
+      >
+        <NodeHeader>Text</NodeHeader>
+        <NodeContent>
+          <textarea
+            placeholder="Enter a Text"
             value={value}
-            onChange={(e) => setValue(e.target.value)}
-            onBlur={() => setEdit(false)}
+            onChange={handleChange}
+            onBlur={handleChange}
           />
-        ) : (
-          <span onDoubleClick={() => setEdit(true)}>{value}</span>
-        )}
-      </NodeContent>
-    </Node>
+        </NodeContent>
+      </Node>
+      <span>{renderValue}</span>
+    </>
   );
 };
-export default TextNode;
