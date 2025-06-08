@@ -1,3 +1,4 @@
+import FlowEditor from "@/layout/editor";
 import { useAuthStore } from "@/store/authStore";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
@@ -12,5 +13,5 @@ export const Route = createFileRoute("/(protected)/dashboard")({
 });
 
 function RouteComponent() {
-  return <></>;
+  return <FlowEditor />;
 }

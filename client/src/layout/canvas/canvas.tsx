@@ -12,31 +12,25 @@ import {
   useNodesState,
   useReactFlow,
 } from "@xyflow/react";
-import { useCallback, useEffect, useMemo } from "react";
+import "@xyflow/react/dist/style.css";
 
-const nodeTypes = useMemo(
-  () => ({
-    text: TextNode,
-    output: OutputNode,
-  }),
-  []
-);
+import { useCallback } from "react";
+
+const nodeTypes = {
+  text: TextNode,
+  output: OutputNode,
+};
 
 const Canvas = () => {
-  const { getZoom, getViewport } = useReactFlow();
   const { nodes, edges } = useFlowStore();
   const [rfNodes, setRfNodes, onNodesChange] = useNodesState(nodes);
   const [rfEdges, setRfEdges, onEdgesChange] = useEdgesState(edges);
+  const { getZoom, getViewport } = useReactFlow(); // ✅ Will work now
 
   const onConnect = useCallback(
     (params: Edge) => setRfEdges((eds) => addEdge(params, eds)),
     [setRfEdges]
   );
-
-  useEffect(() => {
-    setRfNodes(nodes);
-    setRfEdges(edges);
-  }, [nodes, edges]);
 
   const onDrop = useCallback(
     (event: React.DragEvent) => {

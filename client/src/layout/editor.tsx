@@ -1,11 +1,12 @@
 import { Toolbar, Canvas } from ".";
+import { ReactFlowProvider } from "@xyflow/react";
 
 const FlowEditor = () => {
   return (
-    <div>
+    <ReactFlowProvider>
       <Toolbar />
       <Canvas />
-    </div>
+    </ReactFlowProvider>
   );
 };
 export default FlowEditor;
