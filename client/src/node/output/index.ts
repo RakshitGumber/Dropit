@@ -1,1 +1,1 @@
-export { default as OutputNode } from "./node";
+export { OutputNode } from "./node";
