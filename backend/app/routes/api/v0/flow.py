@@ -24,3 +24,11 @@ def save_flow(
     session.commit()
     session.refresh(flow)
     return {"id": flow.id}
+
+
+@router.get("/{flow_id}")
+def get_flow(flow_id: int, session: Session = Depends(get_session)):
+    flow = session.get(Flow, flow_id)
+    if not flow:
+        raise HTTPException(status_code=404, detail="User not found")
+    return flow
