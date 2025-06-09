@@ -1,11 +1,11 @@
 import { Toolbar, Canvas } from ".";
 import { ReactFlowProvider } from "@xyflow/react";
 
-const FlowEditor = () => {
+const FlowEditor = ({ id }: { id: number }) => {
   return (
     <ReactFlowProvider>
       <Toolbar />
-      <Canvas />
+      <Canvas id={id} />
     </ReactFlowProvider>
   );
 };

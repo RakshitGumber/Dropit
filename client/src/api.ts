@@ -22,3 +22,5 @@ export const saveFlow = (data: {
   edges: string;
   user_id?: string;
 }) => api.post("/flow", data);
+
+export const getFlow = (id: number) => api.get(`/flow/${id}`);

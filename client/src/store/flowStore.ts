@@ -38,6 +38,7 @@ interface FlowState {
   getNodeData: (nodeId: string) => NodeData | undefined;
 
   saveFlow: (name: string) => Promise<void>;
+  loadFlow: (id: number) => Promise<void>;
 }
 
 export const useFlowStore = createWithEqualityFn<FlowState>(
@@ -153,6 +154,17 @@ export const useFlowStore = createWithEqualityFn<FlowState>(
         console.log("✅ Flow saved to backend.");
       } catch (error) {
         console.error("❌ Error saving flow:", error);
+      }
+    },
+    loadFlow: async (id: number) => {
+      try {
+        const res = await api.getFlow(id);
+        set({
+          nodes: JSON.parse(res.data.nodes || "[]"),
+          edges: JSON.parse(res.data.edges || "[]"),
+        });
+      } catch (err) {
+        console.error("Error loading flow:", err);
       }
     },
   }),

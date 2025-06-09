@@ -1,6 +1,6 @@
 import FlowEditor from "@/layout/editor";
 import { useAuthStore } from "@/store/authStore";
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute, redirect, useParams } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/(protected)/flow/$id")({
   beforeLoad: () => {
@@ -13,5 +13,7 @@ export const Route = createFileRoute("/(protected)/flow/$id")({
 });
 
 function RouteComponent() {
-  return <FlowEditor />;
+  const { id } = useParams({ from: "/(protected)/flow/$id" });
+
+  return <FlowEditor id={Number(id)} />;
 }

@@ -23,7 +23,7 @@ export const OutputNode = ({
   const response = useNodesData(summaryConnections?.[0]?.source);
 
   return (
-    <Node target={[{ id: `${id}-value` }]} resizable selected={selected}>
+    <Node target={[{ id: `${id}-value` }]} selected={selected}>
       <NodeHeader>OutputNode</NodeHeader>
       <NodeContent className="bg-background p-2 rounded-md h-[calc(100%-3rem)] overflow-auto">
         {response &&
