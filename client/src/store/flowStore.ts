@@ -13,28 +13,30 @@ import {
 import { nanoid } from "nanoid";
 import * as api from "@/api";
 
-type NodeData = {
-  [key: string]: any;
-};
-
-type NodeIDs = {
-  [key: string]: number;
-};
+type NodeData = { [key: string]: any };
+type NodeIDs = { [key: string]: number };
 
 interface FlowState {
   nodes: Node<NodeData>[];
   edges: Edge[];
   nodeIDs: NodeIDs;
+
+  // Core methods
   getNodeID: (type: string) => string;
-  setNodes: (nodes: Node[]) => void;
+  setNodes: (nodes: Node<NodeData>[]) => void;
   setEdges: (edges: Edge[]) => void;
+
   onNodesChange: (changes: NodeChange[]) => void;
-  onEdgesChange: (edge: EdgeChange[]) => void;
+  onEdgesChange: (changes: EdgeChange[]) => void;
   onConnect: (connection: Connection) => void;
+
   addEdge: (data: Omit<Edge, "id">) => void;
-  updateNode: (id: string, data: any) => void;
-  addNode: (node: Node) => void;
+  addNode: (node: Node<NodeData>) => void;
   addTextNode: () => void;
+  updateNode: (id: string, data: Partial<NodeData>) => void;
+  updateNodeField: (nodeId: string, field: string, value: any) => void;
+  getNodeData: (nodeId: string) => NodeData | undefined;
+
   saveFlow: (name: string) => Promise<void>;
 }
 
@@ -43,96 +45,114 @@ export const useFlowStore = createWithEqualityFn<FlowState>(
     nodes: [],
     edges: [],
     nodeIDs: {},
-    getNodeID: (type: string) => {
-      const newIDs = { ...get().nodeIDs };
-      if (newIDs[type] === undefined) {
-        newIDs[type] = 0;
-      }
-      newIDs[type] += 1;
-      set({ nodeIDs: newIDs });
-      return `${type}-${newIDs[type]}`;
+
+    getNodeID: (type) => {
+      const ids = { ...get().nodeIDs };
+      ids[type] = (ids[type] || 0) + 1;
+      set({ nodeIDs: ids });
+      return `${type}-${ids[type]}`;
     },
-    setNodes: (nodes) => set({ nodes }),
-    setEdges: (edges) => set({ edges }),
 
-    onNodesChange: (changes) =>
-      set({ nodes: applyNodeChanges(changes, get().nodes) }),
+    setNodes: (nodes) => {
+      console.log("✅ setNodes:", nodes);
+      set({ nodes });
+    },
 
-    onEdgesChange: (changes) =>
-      set({ edges: applyEdgeChanges(changes, get().edges) }),
+    setEdges: (edges) => {
+      console.log("✅ setEdges:", edges);
+      set({ edges });
+    },
 
-    onConnect: (connection) =>
-      set({
-        edges: addEdge(
-          {
-            ...connection,
-            type: "smoothstep",
-            animated: true,
-            markerEnd: { type: MarkerType.Arrow, height: 20, width: 20 },
-          },
-          get().edges
-        ),
-      }),
+    onNodesChange: (changes) => {
+      const updated = applyNodeChanges(changes, get().nodes);
+      set({ nodes: updated });
+    },
 
-    getNodeData: (nodeId: string) => {
-      const node = get().nodes.find((node) => node.id === nodeId);
-      return node?.data;
+    onEdgesChange: (changes) => {
+      const updated = applyEdgeChanges(changes, get().edges);
+      set({ edges: updated });
+    },
+
+    onConnect: (connection) => {
+      const newEdge: Edge = {
+        ...connection,
+        id: nanoid(),
+        type: "smoothstep",
+        animated: true,
+        markerEnd: { type: MarkerType.Arrow, height: 20, width: 20 },
+      };
+      set({ edges: addEdge(newEdge, get().edges) });
     },
 
     addEdge: (data) => {
-      const id = nanoid();
-      const edge: Edge = { id, ...data };
-      set({ edges: [edge, ...get().edges] });
+      const edge: Edge = { id: nanoid(), ...data };
+      set((state) => ({ edges: [...state.edges, edge] }));
     },
 
-    updateNode: (id, data) =>
-      set({
-        nodes: get().nodes.map((node) =>
+    addNode: (node) => {
+      console.log("➕ Adding node:", node);
+      set((state) => ({ nodes: [...state.nodes, node] }));
+    },
+
+    addTextNode: () => {
+      const newNode: Node = {
+        id: nanoid(),
+        type: "default",
+        position: {
+          x: Math.random() * 400,
+          y: Math.random() * 400,
+        },
+        data: { label: "Text Node" },
+      };
+      console.log("➕ Adding text node:", newNode);
+      set((state) => ({ nodes: [...state.nodes, newNode] }));
+    },
+
+    updateNode: (id, data) => {
+      set((state) => ({
+        nodes: state.nodes.map((node) =>
           node.id === id ? { ...node, data: { ...node.data, ...data } } : node
         ),
-      }),
+      }));
+    },
 
-    addNode: (node) => set((state) => ({ nodes: [...state.nodes, node] })),
-
-    addTextNode: () =>
+    updateNodeField: (nodeId, field, value) => {
       set((state) => ({
-        nodes: [
-          ...state.nodes,
-          {
-            id: nanoid(),
-            type: "default",
-            position: { x: Math.random() * 400, y: Math.random() * 400 },
-            data: { label: "Text Node" },
-          },
-        ],
-      })),
+        nodes: state.nodes.map((node) =>
+          node.id === nodeId
+            ? { ...node, data: { ...node.data, [field]: value } }
+            : node
+        ),
+      }));
+    },
 
-    updateNodeField: (nodeId: string, fieldName: string, fieldValue: any) => {
-      set({
-        nodes: get().nodes.map((node) => {
-          if (node.id === nodeId) {
-            return {
-              ...node,
-              data: { ...node.data, [fieldName]: fieldValue },
-            };
-          }
-          return node;
-        }),
-      });
+    getNodeData: (nodeId) => {
+      return get().nodes.find((n) => n.id === nodeId)?.data;
     },
 
     saveFlow: async (name) => {
       const { nodes, edges } = get();
+
+      console.log("📦 Saving flow:", { name, nodes, edges });
+
+      if (!nodes.length) {
+        console.warn("⚠️ No nodes to save.");
+      }
+
+      // Get user from localStorage
+      const user = JSON.parse(localStorage.getItem("user") || "null");
+      const user_id = user?.user_id;
 
       try {
         await api.saveFlow({
           name,
           nodes: JSON.stringify(nodes),
           edges: JSON.stringify(edges),
+          user_id, // include user_id if available
         });
-        console.log("✅ Flow saved.");
-      } catch (err) {
-        console.error("❌ Save failed", err);
+        console.log("✅ Flow saved to backend.");
+      } catch (error) {
+        console.error("❌ Error saving flow:", error);
       }
     },
   }),

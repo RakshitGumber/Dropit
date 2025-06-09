@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import {
   Background,
   Controls,
@@ -28,26 +28,6 @@ interface NodeData {
 }
 
 const nodeTypes: any = Object.fromEntries(getNodetypes());
-
-// const selector = (state: any): StoreSelector => ({
-//   nodes: state.nodes,
-//   edges: state.edges,
-//   getNodeID: state.getNodeID,
-//   addNode: state.addNode,
-//   onNodesChange: state.onNodesChange,
-//   onEdgesChange: state.onEdgesChange,
-//   onConnect: state.onConnect,
-// });
-
-// interface StoreSelector {
-//   nodes: Node<NodeData>[];
-//   edges: Edge[];
-//   getNodeID: (type: string) => string;
-//   addNode: (node: Node<NodeData>) => void;
-//   onNodesChange: OnNodesChange;
-//   onEdgesChange: OnEdgesChange;
-//   onConnect: (connection: Connection) => void;
-// }
 
 const Canvas = () => {
   const { screenToFlowPosition } = useReactFlow();
@@ -125,6 +105,16 @@ const Canvas = () => {
     },
     [screenToFlowPosition, setNodes]
   );
+
+  const { setNodes: setStoreNodes, setEdges: setStoreEdges } = useFlowStore();
+
+  useEffect(() => {
+    setStoreNodes(nodes);
+  }, [nodes]);
+
+  useEffect(() => {
+    setStoreEdges(edges);
+  }, [edges]);
 
   const onDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
