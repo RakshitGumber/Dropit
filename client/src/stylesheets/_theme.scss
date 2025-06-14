@@ -1,7 +1,16 @@
 :root {
-  --bg-color: #f9fafb;
-  --text-color: #0f172a;
-  --icon-color: #64748b;
-  --shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+  --bg-color: #f4f5f7;
+  --text-color: #1e1e1e;
+  --card-color: #ffffff;
   --accent: #6369d1;
+  --success: #6fcf97;
+  --warning: #f2c94c;
+  --border: #e0e0e0;
+}
+
+[theme="dark"] {
+  --bg-color: #121212;
+  --card-color: #1e1e1e;
+  --text-color: #ffffff;
+  --accent: #7ed6df;
 }

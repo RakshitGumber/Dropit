@@ -1,6 +1,7 @@
 import { Icon } from "@iconify/react";
 import "./header.scss";
 import { useNavigate } from "@tanstack/react-router";
+import { useAuthStore } from "@/store/authStore";
 
 interface HeaderProps {
   isSidebarOpen: boolean;
@@ -8,6 +9,7 @@ interface HeaderProps {
 
 const header: React.FC<HeaderProps> = ({ isSidebarOpen }) => {
   const navigate = useNavigate();
+  const { user } = useAuthStore();
 
   return (
     <header
@@ -34,7 +36,7 @@ const header: React.FC<HeaderProps> = ({ isSidebarOpen }) => {
             </button>
           </div>
           <div className="account">
-            {false ? (
+            {user ? (
               <div />
             ) : (
               <button
