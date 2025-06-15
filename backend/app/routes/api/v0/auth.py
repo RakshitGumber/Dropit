@@ -1,3 +1,4 @@
+from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from sqlmodel import Session, select
@@ -66,7 +67,7 @@ def login(user: LoginUser, session: Session = Depends(get_session)):
 
 
 @router.get("/{user_id}", response_model=User)
-def get_user(user_id: int, session: Session = Depends(get_session)):
+def get_user(user_id: UUID, session: Session = Depends(get_session)):
     user = session.get(User, user_id)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
