@@ -37,8 +37,8 @@ interface FlowState {
   updateNodeField: (nodeId: string, field: string, value: any) => void;
   getNodeData: (nodeId: string) => NodeData | undefined;
 
-  saveFlow: (name: string) => Promise<void>;
-  loadFlow: (id: number) => Promise<void>;
+  createFlow: (name: string) => Promise<any>;
+  loadFlow: (id: any) => Promise<void>;
 }
 
 export const useFlowStore = createWithEqualityFn<FlowState>(
@@ -131,7 +131,7 @@ export const useFlowStore = createWithEqualityFn<FlowState>(
       return get().nodes.find((n) => n.id === nodeId)?.data;
     },
 
-    saveFlow: async (name) => {
+    createFlow: async (name) => {
       const { nodes, edges } = get();
 
       console.log("📦 Saving flow:", { name, nodes, edges });
@@ -145,12 +145,13 @@ export const useFlowStore = createWithEqualityFn<FlowState>(
       const user_id = user?.user_id;
 
       try {
-        await api.saveFlow({
+        const data = await api.createFlow({
           name,
-          nodes: JSON.stringify(nodes),
-          edges: JSON.stringify(edges),
-          user_id, // include user_id if available
+          nodes: "[]",
+          edges: "[]",
+          user_id,
         });
+        return data;
         console.log("✅ Flow saved to backend.");
       } catch (error) {
         console.error("❌ Error saving flow:", error);

@@ -15,5 +15,5 @@ export const Route = createFileRoute("/(protected)/flow/$id")({
 function RouteComponent() {
   const { id } = useParams({ from: "/(protected)/flow/$id" });
 
-  return <FlowEditor id={Number(id)} />;
+  return <FlowEditor id={id} />;
 }
