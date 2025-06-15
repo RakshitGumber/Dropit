@@ -12,5 +12,16 @@ export const Route = createFileRoute("/(protected)/dashboard")({
 });
 
 function RouteComponent() {
-  return <></>;
+  const { user } = useAuthStore((state) => state);
+
+  return (
+    <div>
+      <h1>Welcome {user?.username}</h1>
+      <ul>
+        <li>
+          <a href={`./flow/${1}`}>{1}</a>
+        </li>
+      </ul>
+    </div>
+  );
 }
