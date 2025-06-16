@@ -9,6 +9,7 @@ function RouteComponent() {
   return (
     <>
       <div className="hero">Hello! Welcome to the Landing Page.</div>
+      <button>Hello</button>
     </>
   );
 }

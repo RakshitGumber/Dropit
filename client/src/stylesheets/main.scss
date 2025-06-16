@@ -12,3 +12,8 @@ body {
   color: var(--text-color);
   font-family: "Onest", monospace;
 }
+
+button {
+  background-color: var(--accent-color);
+  color: var(--bg-color);
+}
