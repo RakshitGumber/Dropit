@@ -1,5 +1,5 @@
 import { createRootRoute, Outlet } from "@tanstack/react-router";
-import { Header, Sidebar } from "@/components/core";
+import { Header } from "@/components/core";
 import { useState } from "react";
 
 export const Route = createRootRoute({
@@ -7,15 +7,11 @@ export const Route = createRootRoute({
 });
 
 function RootComponent() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, _] = useState(false);
 
   return (
     <>
       <Header isSidebarOpen={isSidebarOpen} />
-      <Sidebar
-        isSidebarOpen={isSidebarOpen}
-        setIsSidebarOpen={setIsSidebarOpen}
-      />
       <Outlet />
     </>
   );

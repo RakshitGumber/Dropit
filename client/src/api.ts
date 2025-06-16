@@ -16,11 +16,13 @@ export const signupUser = (data: {
 export const loginUser = (data: { email: string; password: string }) =>
   api.post("/auth/login", data);
 
-export const saveFlow = (data: {
+export const createFlow = (data: {
   name: string;
   nodes: string;
   edges: string;
   user_id?: string;
 }) => api.post("/flow", data);
 
-export const getFlow = (id: number) => api.get(`/flow/${id}`);
+export const getFlow = (id: any) => api.get(`/flow/${id}`);
+
+export const getMyFlows = (id: string) => api.get(`/flow/getFlows/${id}`);

@@ -32,7 +32,7 @@ interface NodeData {
 const nodeTypes: any = Object.fromEntries(getNodetypes());
 
 interface CanvasProps {
-  id?: number;
+  id?: any;
 }
 
 const Canvas: React.FC<CanvasProps> = ({ id }) => {
@@ -153,9 +153,6 @@ const Canvas: React.FC<CanvasProps> = ({ id }) => {
 
   return (
     <div style={{ width: "100%", height: "calc(100vh - 70px)" }}>
-      <button onClick={() => useFlowStore.getState().saveFlow("My Flow")}>
-        Save Flow
-      </button>
       <ReactFlow
         nodes={nodes}
         edges={edges}

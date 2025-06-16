@@ -1,4 +1,4 @@
-import { Icon } from "@iconify/react";
+// import { Icon } from "@iconify/react";
 import "./header.scss";
 import { useNavigate } from "@tanstack/react-router";
 import { useAuthStore } from "@/store/authStore";
@@ -15,9 +15,7 @@ const header: React.FC<HeaderProps> = ({ isSidebarOpen }) => {
     <header
       className="header"
       style={
-        isSidebarOpen
-          ? { width: "calc(100vw - 270px)" }
-          : { width: "calc(100vw - 56px)" }
+        isSidebarOpen ? { width: "calc(100vw - 270px)" } : { width: "100%" }
       }
     >
       <div className="header-content">
@@ -27,14 +25,14 @@ const header: React.FC<HeaderProps> = ({ isSidebarOpen }) => {
           </div>
         )}
         <div className="nav-right">
-          <div className="notifs">
+          {/* <div className="notifs">
             <button className="notif-button">
               <Icon icon="si:mail-line" />
             </button>
             <button className="notif-button">
               <Icon icon="si:notifications-thick-line" />
             </button>
-          </div>
+          </div> */}
           <div className="account">
             {user ? (
               <div />
