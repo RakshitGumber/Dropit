@@ -198,6 +198,92 @@
     margin: 20px;
     font-size: 24px;
     color: #484848;
-    font-weight: 600  ;
+    font-weight: 600;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .hero {
+    padding: 0 12px;
+
+    .waitlist-nav {
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: flex-start;
+      padding: 16px 0;
+      gap: 12px;
+    }
+
+    .text {
+      margin-top: 60px;
+      gap: 32px;
+
+      .logo {
+        font-size: 32px;
+        text-align: center;
+      }
+
+      .subheading {
+        font-size: 16px;
+        gap: 12px;
+        color: #6e6e6e;
+        text-align: left;
+        padding: 0 8px;
+        line-height: 1.4;
+      }
+    }
+
+    .iso-container {
+      width: 100%;
+      height: auto;
+      padding: 40px 0;
+
+      button {
+        width: 90%;
+        max-width: 320px;
+        height: 100px;
+        font-size: 32px;
+
+        transform: rotate(-15deg) skewX(15deg);
+
+        &::after {
+          height: 0.75em;
+          left: -0.4em;
+          bottom: -0.75em;
+        }
+
+        &::before {
+          width: 0.75em;
+          left: -0.75em;
+          bottom: -0.4em;
+        }
+
+        &:active {
+          transform: translateY(0.5em) rotate(-15deg) skewX(15deg);
+
+          &::after {
+            height: 0.4em;
+            bottom: -0.4em;
+          }
+
+          &::before {
+            width: 0.4em;
+            bottom: -0.25em;
+          }
+        }
+      }
+
+      span {
+        font-size: 16px;
+        transform: none;
+        margin-top: 100px;
+        text-align: center;
+      }
+    }
+
+    footer {
+      font-size: 14px;
+      margin: 24px 0;
+      text-align: center;
+    }
   }
 }
