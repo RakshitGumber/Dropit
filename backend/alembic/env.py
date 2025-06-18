@@ -4,6 +4,7 @@ from sqlmodel import SQLModel
 
 from app.models.user import User
 from app.models.flow import Flow
+from app.models.earlyusers import EarlyUser
 from app.database import engine
 
 from alembic import context

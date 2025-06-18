@@ -1,6 +1,22 @@
-@use "./theme";
 @import url("https://fonts.googleapis.com/css2?family=Onest:wght@100..900");
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+:root {
+  --bg-color: #fff;
+  --card-background: #fcfcfc;
+  --navbar: #00000006;
+  --text-color: #202020;
+  --accent-color: #ff4f4f;
+  --border: 1px solid #d8d8d8;
+}
+
+.dark {
+  --bg-color: #000;
+  --card-background: #121212;
+  --navbar: #ffffff12;
+  --text-color: #eeeeee;
+  --accent-color: #ff4f4f;
+  --border: 1px solid #3a3a3a;
+}
 
 * {
   margin: 0;
@@ -12,4 +28,4 @@ body {
   background-color: var(--bg-color);
   color: var(--text-color);
   font-family: "Onest", monospace;
-}
+}/*# sourceMappingURL=main.css.map */

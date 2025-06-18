@@ -1,7 +1,17 @@
 :root {
-  --background-color: #f9fbfd;
+  --bg-color: #fff;
+  --card-background: #fcfcfc;
+  --navbar: #00000006;
+  --text-color: #202020;
+  --accent-color: #ff4f4f;
+  --border: 1px solid #d8d8d8;
 }
 
 .dark {
-  --background-color: #000000;
+  --bg-color: #000;
+  --card-background: #121212;
+  --navbar: #ffffff12;
+  --text-color: #eeeeee;
+  --accent-color: #ff4f4f;
+  --border: 1px solid #3a3a3a;
 }
