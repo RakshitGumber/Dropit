@@ -17,6 +17,7 @@
     "@types/showdown": "^2.0.6",
     "@xyflow/react": "^12.3.6",
     "axios": "^1.7.9",
+    "framer-motion": "^12.18.1",
     "lodash.isequal": "^4.5.0",
     "radix-ui": "^1.4.2",
     "react": "^18.3.1",
