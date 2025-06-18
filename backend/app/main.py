@@ -15,6 +15,7 @@ import traceback
 
 from app.routes import router
 
+from app.config import ALLOWED_ORIGINS
 
 app = FastAPI()
 
@@ -46,9 +47,7 @@ async def http_exception_handler(request, exc):
     )
 
 
-origins = [
-    "http://localhost:5173",
-]
+origins = ALLOWED_ORIGINS
 
 app.add_middleware(
     CORSMiddleware,
