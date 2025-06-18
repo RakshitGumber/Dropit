@@ -1,6 +1,7 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 
 import "./waitlist.scss";
+import { Icon } from "@iconify/react/dist/iconify.js";
 // import { Icon } from "@iconify/react/dist/iconify.js";
 
 export const Route = createFileRoute("/waitlist")({
@@ -13,7 +14,7 @@ function RouteComponent() {
   return (
     <main className="hero">
       <nav className="waitlist-nav">
-        {/* <div className="nav-item">
+        <div className="nav-item">
           <Link to="/try/api">
             <div>
               <h2>Try</h2>
@@ -30,7 +31,7 @@ function RouteComponent() {
             </div>
             <Icon icon="ooui:link-external-ltr" className="icon"></Icon>
           </Link>
-        </div> */}
+        </div>
       </nav>
       <div className="text">
         <div className="logo">
