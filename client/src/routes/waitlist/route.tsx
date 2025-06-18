@@ -27,7 +27,7 @@ function RouteComponent() {
           <Link to="/try/api">
             <div>
               <h2>Try</h2>
-              <h1>Create Flow</h1>
+              <h1>Creata Flow</h1>
             </div>
             <Icon icon="ooui:link-external-ltr" className="icon"></Icon>
           </Link>
