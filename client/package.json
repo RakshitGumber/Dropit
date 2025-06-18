@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite dev",
     "build": "tsc -b && vite build",
-    "start": "vite start"
+    "start": "vite"
   },
   "dependencies": {
     "@iconify/react": "^6.0.0",
