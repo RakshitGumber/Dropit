@@ -8,7 +8,7 @@ from sqlmodel import Session
 router = APIRouter(tags=["early-users"])
 
 
-@router.post("/join")
+@router.post("/")
 def join_user(user: EarlyUser, session: Session = Depends(get_session)):
     logger.info(f"Creating user: {user.username}")
     try:
