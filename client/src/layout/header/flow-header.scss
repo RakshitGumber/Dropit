@@ -1,0 +1,94 @@
+@use "../../stylesheets/theme";
+
+header.flow-header {
+  width: 100vw;
+  display: flex;
+
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 16px 24px;
+
+  border-bottom: var(--border);
+
+  .flux-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 8px;
+
+    .edit-name {
+      display: flex;
+      align-items: center;
+      h1 {
+        font-size: 24px;
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-family: "Inter";
+
+        &:hover {
+          background-color: var(--hover);
+          border: 1px solid var(--border);
+          text-decoration: underline;
+          text-underline-offset: 2px;
+        }
+      }
+      input {
+        vertical-align: middle;
+        font-size: 24px;
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-weight: 700;
+        width: 200px;
+        background-color: var(--background-color);
+        border: 1px solid var(--border);
+        color: var(--text-color);
+        font-family: "Inter";
+      }
+    }
+
+    button {
+      display: flex;
+      background: none;
+      border: none;
+      color: var(--text-color);
+      font-size: 24px;
+      padding: 6px;
+
+      width: 36px;
+      height: 36px;
+
+      cursor: pointer;
+
+      border-radius: 4px;
+
+      &:hover {
+        background-color: var(--hover);
+        border: 1px solid var(--border);
+      }
+    }
+  }
+
+  .action-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+
+    button.create-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 12px 12px;
+      border-radius: 4px;
+
+      font-size: 16px;
+      font-weight: 600;
+      color: white;
+      background-color: var(--accent-color);
+      border: none;
+      cursor: pointer;
+    }
+  }
+}

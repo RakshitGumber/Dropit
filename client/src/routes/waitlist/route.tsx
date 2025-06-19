@@ -15,19 +15,19 @@ function RouteComponent() {
     <main className="hero">
       <nav className="waitlist-nav">
         <div className="nav-item">
-          <Link to="/try/api">
+          {/* <Link to="/try/api">
             <div>
               <h2>Try</h2>
               <h1>Connection</h1>
             </div>
             <Icon icon="ooui:link-external-ltr" className="icon"></Icon>
-          </Link>
+          </Link> */}
         </div>
         <div className="nav-item">
-          <Link to="/try/api">
+          <Link to="/try/flow">
             <div>
               <h2>Try</h2>
-              <h1>Creata Flow</h1>
+              <h1>Create Flow</h1>
             </div>
             <Icon icon="ooui:link-external-ltr" className="icon"></Icon>
           </Link>

@@ -1,12 +1,17 @@
 import { Toolbar, Canvas } from ".";
 import { ReactFlowProvider } from "@xyflow/react";
+import { FlowHeader } from "./header";
+import "./editor.scss";
 
-const FlowEditor = ({ id }: { id: any }) => {
+const FlowEditor = ({ id }: { id?: string }) => {
   return (
-    <ReactFlowProvider>
-      <Toolbar />
-      <Canvas id={id} />
-    </ReactFlowProvider>
+    <div className="flow-editor">
+      <FlowHeader />
+      {/* <ReactFlowProvider>
+        <Toolbar />
+        <Canvas id={id} />
+      </ReactFlowProvider> */}
+    </div>
   );
 };
 export default FlowEditor;

@@ -32,7 +32,7 @@ interface NodeData {
 const nodeTypes: any = Object.fromEntries(getNodetypes());
 
 interface CanvasProps {
-  id?: any;
+  id?: string;
 }
 
 const Canvas: React.FC<CanvasProps> = ({ id }) => {
