@@ -1,4 +1,4 @@
-import { Toolbar, Canvas } from ".";
+import { Sidebar, Canvas } from ".";
 import { ReactFlowProvider } from "@xyflow/react";
 import { FlowHeader } from "./header";
 import "./editor.scss";
@@ -52,11 +52,13 @@ const FlowEditor = () => {
     <div className="flow-editor" onClick={handleInteraction}>
       <FlowHeader onInteraction={handleInteraction} />
       <ReactFlowProvider>
-        <Toolbar />
-        <Canvas
-          id={localFlowId ?? routeParams.flowId}
-          onUserEdit={handleInteraction}
-        />
+        <div className="flow-container">
+          <Sidebar />
+          <Canvas
+            id={localFlowId ?? routeParams.flowId}
+            onUserEdit={handleInteraction}
+          />
+        </div>
       </ReactFlowProvider>
     </div>
   );

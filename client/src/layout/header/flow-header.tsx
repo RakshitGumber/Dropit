@@ -73,8 +73,8 @@ const FlowHeader = ({ onInteraction }: { onInteraction: () => void }) => {
         )}
       </div>
       <div className="action-buttons">
-        <button className="create-button">Create New</button>
         <ThemeController />
+        <button className="create-button">Create New</button>
       </div>
     </header>
   );

@@ -6,7 +6,9 @@ header.flow-header {
 
   align-items: flex-end;
   justify-content: space-between;
-  padding: 16px 24px;
+  padding: 16px;
+
+  position: relative;
 
   border-bottom: var(--border);
 

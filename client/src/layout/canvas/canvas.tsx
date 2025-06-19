@@ -14,11 +14,14 @@ import {
   addEdge,
 } from "@xyflow/react";
 
+import "./canvas.scss";
+
 import { useFlowStore } from "@/store/flowStore";
 import { getNodetypes } from "@/registry";
 
 import "@xyflow/react/dist/style.css";
 import isEqual from "lodash.isequal";
+import { relative } from "path";
 
 const gridSize = 25;
 const proOptions = { hideAttribution: true };
@@ -155,7 +158,7 @@ const Canvas: React.FC<CanvasProps> = ({ id, onUserEdit }) => {
   }, []);
 
   return (
-    <div style={{ width: "100%", height: "calc(100vh - 70px)" }}>
+    <div className="canvas-container">
       <ReactFlow
         nodes={nodes}
         edges={edges}

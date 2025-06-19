@@ -3,6 +3,10 @@
 .flow-editor {
   background-color: var(--background-color);
   width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+  height: calc(100vh - 80px);
+}
+
+.flow-container {
+  display: flex;
+  height: 100%;
 }
