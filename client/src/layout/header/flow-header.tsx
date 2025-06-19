@@ -1,17 +1,33 @@
 import { ThemeController } from "@/components/controller";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import "./flow-header.scss";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useOnClickOutside } from "usehooks-ts";
-import { createFlow } from "@/api";
+import { useFlowStore } from "@/store/flowStore";
+import { useParams } from "@tanstack/react-router";
 
 const FlowHeader = ({ onInteraction }: { onInteraction: () => void }) => {
-  const [flowName, setFlowName] = useState("Untitled");
+  const [flowName, setFlowName] = useState(() => {
+    return sessionStorage.getItem("name") ?? "Untitled";
+  });
+
+  useEffect(() => {
+    sessionStorage.setItem("name", flowName);
+  }, [flowName]);
+
   const [editName, setEditName] = useState(false);
+  const updateFlow = useFlowStore((s) => s.updateFlow);
+  const { flowId } = useParams({ strict: false });
 
   const ref = useRef(null);
 
-  useOnClickOutside(ref, () => setEditName(false));
+  useOnClickOutside(ref, () => {
+    if (editName) {
+      setEditName(false);
+      // @ts-ignore
+      updateFlow(flowId, flowName);
+    }
+  });
 
   return (
     <header className="flow-header">
@@ -33,6 +49,8 @@ const FlowHeader = ({ onInteraction }: { onInteraction: () => void }) => {
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   setEditName(false);
+                  // @ts-ignore
+                  updateFlow(flowId, flowName);
                 }
               }}
             />
@@ -43,7 +61,12 @@ const FlowHeader = ({ onInteraction }: { onInteraction: () => void }) => {
             <button onClick={() => setEditName(!editName)}>
               <Icon icon="hugeicons:edit-02" />
             </button>
-            <button onClick={() => createFlow}>
+            <button
+              onClick={() => {
+                // @ts-ignore
+                updateFlow(flowId);
+              }}
+            >
               <Icon icon="qlementine-icons:save-24" />
             </button>
           </>

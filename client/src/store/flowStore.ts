@@ -39,6 +39,7 @@ interface FlowState {
 
   createFlow: (name: string) => Promise<any>;
   loadFlow: (id: any) => Promise<void>;
+  updateFlow: (id: string, name?: string) => Promise<void>;
 }
 
 export const useFlowStore = createWithEqualityFn<FlowState>(
@@ -160,12 +161,28 @@ export const useFlowStore = createWithEqualityFn<FlowState>(
     loadFlow: async (id: number) => {
       try {
         const res = await api.getFlow(id);
+        sessionStorage.setItem("name", res.data.name);
         set({
           nodes: JSON.parse(res.data.nodes || "[]"),
           edges: JSON.parse(res.data.edges || "[]"),
         });
       } catch (err) {
         console.error("Error loading flow:", err);
+      }
+    },
+    updateFlow: async (id: string, name?: string) => {
+      const { nodes, edges } = get();
+      const payload = {
+        name,
+        nodes: JSON.stringify(nodes),
+        edges: JSON.stringify(edges),
+      };
+
+      try {
+        await api.updateFlow(id, payload);
+        console.log("✅ Flow updated successfully");
+      } catch (err) {
+        console.error("❌ Error updating flow:", err);
       }
     },
   }),

@@ -91,6 +91,7 @@ const Canvas: React.FC<CanvasProps> = ({ id, onUserEdit }) => {
   const onDrop = useCallback(
     (event: React.DragEvent<HTMLDivElement>) => {
       event.preventDefault();
+
       onUserEdit();
 
       const dataTransfer = event.dataTransfer?.getData("application/reactflow");
@@ -145,7 +146,7 @@ const Canvas: React.FC<CanvasProps> = ({ id, onUserEdit }) => {
         console.error("Error parsing drag data:", error);
       }
     },
-    [screenToFlowPosition, setNodes]
+    [screenToFlowPosition, setNodes, onUserEdit]
   );
 
   const onDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {

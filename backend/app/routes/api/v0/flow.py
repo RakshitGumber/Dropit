@@ -36,6 +36,24 @@ def get_flow_by_id(flow_id: UUID, session: Session = Depends(get_session)):
     return flow
 
 
+@router.patch("/{flow_id}")
+def update_flow(
+    flow_id: UUID, updated_data: dict, session: Session = Depends(get_session)
+):
+    flow = session.get(Flow, flow_id)
+    if not flow:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    for key, value in updated_data.items():
+        if hasattr(flow, key):
+            setattr(flow, key, value)
+
+    session.add(flow)
+    session.commit()
+    session.refresh(flow)
+    return {"detail": "Flow updated", "id": flow.id}
+
+
 @router.get("/getFlows/{user_id}")
 def get_user_flows(
     user_id: UUID,
