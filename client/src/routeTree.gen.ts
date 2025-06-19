@@ -18,6 +18,7 @@ import { Route as protectedDashboardRouteRouteImport } from './routes/(protected
 import { Route as protectedFlowIdRouteImport } from './routes/(protected)/flow/$id'
 import { Route as waitlistTryFlowRouteRouteImport } from './routes/(waitlist)/try/flow/route'
 import { Route as waitlistTryApiRouteRouteImport } from './routes/(waitlist)/try/api/route'
+import { Route as waitlistTryFlowFlowIdRouteImport } from './routes/(waitlist)/try/flow/$flowId'
 
 const WaitlistRouteRoute = WaitlistRouteRouteImport.update({
   id: '/waitlist',
@@ -65,6 +66,11 @@ const waitlistTryApiRouteRoute = waitlistTryApiRouteRouteImport.update({
   path: '/try/api',
   getParentRoute: () => rootRouteImport,
 } as any)
+const waitlistTryFlowFlowIdRoute = waitlistTryFlowFlowIdRouteImport.update({
+  id: '/$flowId',
+  path: '/$flowId',
+  getParentRoute: () => waitlistTryFlowRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRouteRoute
@@ -74,8 +80,9 @@ export interface FileRoutesByFullPath {
   '/auth/login': typeof AuthLoginRouteRoute
   '/auth/signup': typeof AuthSignupRouteRoute
   '/try/api': typeof waitlistTryApiRouteRoute
-  '/try/flow': typeof waitlistTryFlowRouteRoute
+  '/try/flow': typeof waitlistTryFlowRouteRouteWithChildren
   '/flow/$id': typeof protectedFlowIdRoute
+  '/try/flow/$flowId': typeof waitlistTryFlowFlowIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRouteRoute
@@ -85,8 +92,9 @@ export interface FileRoutesByTo {
   '/auth/login': typeof AuthLoginRouteRoute
   '/auth/signup': typeof AuthSignupRouteRoute
   '/try/api': typeof waitlistTryApiRouteRoute
-  '/try/flow': typeof waitlistTryFlowRouteRoute
+  '/try/flow': typeof waitlistTryFlowRouteRouteWithChildren
   '/flow/$id': typeof protectedFlowIdRoute
+  '/try/flow/$flowId': typeof waitlistTryFlowFlowIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -97,8 +105,9 @@ export interface FileRoutesById {
   '/auth/login': typeof AuthLoginRouteRoute
   '/auth/signup': typeof AuthSignupRouteRoute
   '/(waitlist)/try/api': typeof waitlistTryApiRouteRoute
-  '/(waitlist)/try/flow': typeof waitlistTryFlowRouteRoute
+  '/(waitlist)/try/flow': typeof waitlistTryFlowRouteRouteWithChildren
   '/(protected)/flow/$id': typeof protectedFlowIdRoute
+  '/(waitlist)/try/flow/$flowId': typeof waitlistTryFlowFlowIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -112,6 +121,7 @@ export interface FileRouteTypes {
     | '/try/api'
     | '/try/flow'
     | '/flow/$id'
+    | '/try/flow/$flowId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -123,6 +133,7 @@ export interface FileRouteTypes {
     | '/try/api'
     | '/try/flow'
     | '/flow/$id'
+    | '/try/flow/$flowId'
   id:
     | '__root__'
     | '/'
@@ -134,6 +145,7 @@ export interface FileRouteTypes {
     | '/(waitlist)/try/api'
     | '/(waitlist)/try/flow'
     | '/(protected)/flow/$id'
+    | '/(waitlist)/try/flow/$flowId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -144,7 +156,7 @@ export interface RootRouteChildren {
   AuthLoginRouteRoute: typeof AuthLoginRouteRoute
   AuthSignupRouteRoute: typeof AuthSignupRouteRoute
   waitlistTryApiRouteRoute: typeof waitlistTryApiRouteRoute
-  waitlistTryFlowRouteRoute: typeof waitlistTryFlowRouteRoute
+  waitlistTryFlowRouteRoute: typeof waitlistTryFlowRouteRouteWithChildren
   protectedFlowIdRoute: typeof protectedFlowIdRoute
 }
 
@@ -213,8 +225,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof waitlistTryApiRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(waitlist)/try/flow/$flowId': {
+      id: '/(waitlist)/try/flow/$flowId'
+      path: '/$flowId'
+      fullPath: '/try/flow/$flowId'
+      preLoaderRoute: typeof waitlistTryFlowFlowIdRouteImport
+      parentRoute: typeof waitlistTryFlowRouteRoute
+    }
   }
 }
+
+interface waitlistTryFlowRouteRouteChildren {
+  waitlistTryFlowFlowIdRoute: typeof waitlistTryFlowFlowIdRoute
+}
+
+const waitlistTryFlowRouteRouteChildren: waitlistTryFlowRouteRouteChildren = {
+  waitlistTryFlowFlowIdRoute: waitlistTryFlowFlowIdRoute,
+}
+
+const waitlistTryFlowRouteRouteWithChildren =
+  waitlistTryFlowRouteRoute._addFileChildren(waitlistTryFlowRouteRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRouteRoute: IndexRouteRoute,
@@ -224,7 +254,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthLoginRouteRoute: AuthLoginRouteRoute,
   AuthSignupRouteRoute: AuthSignupRouteRoute,
   waitlistTryApiRouteRoute: waitlistTryApiRouteRoute,
-  waitlistTryFlowRouteRoute: waitlistTryFlowRouteRoute,
+  waitlistTryFlowRouteRoute: waitlistTryFlowRouteRouteWithChildren,
   protectedFlowIdRoute: protectedFlowIdRoute,
 }
 export const routeTree = rootRouteImport

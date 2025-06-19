@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import { useOnClickOutside } from "usehooks-ts";
 import { createFlow } from "@/api";
 
-const FlowHeader = () => {
+const FlowHeader = ({ onInteraction }: { onInteraction: () => void }) => {
   const [flowName, setFlowName] = useState("Untitled");
   const [editName, setEditName] = useState(false);
 
@@ -17,7 +17,10 @@ const FlowHeader = () => {
     <header className="flow-header">
       <div className="flux-actions">
         <div
-          onDoubleClick={() => setEditName(true)}
+          onClick={() => {
+            setEditName(true);
+            onInteraction();
+          }}
           ref={ref}
           className="edit-name"
         >

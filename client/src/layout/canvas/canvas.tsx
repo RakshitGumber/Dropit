@@ -33,9 +33,10 @@ const nodeTypes: any = Object.fromEntries(getNodetypes());
 
 interface CanvasProps {
   id?: string;
+  onUserEdit: () => void;
 }
 
-const Canvas: React.FC<CanvasProps> = ({ id }) => {
+const Canvas: React.FC<CanvasProps> = ({ id, onUserEdit }) => {
   const { screenToFlowPosition } = useReactFlow();
   const [_, setReactFlowInstance] = useState<ReactFlowInstance | null>(null);
 
@@ -90,6 +91,7 @@ const Canvas: React.FC<CanvasProps> = ({ id }) => {
   const onDrop = useCallback(
     (event: React.DragEvent<HTMLDivElement>) => {
       event.preventDefault();
+      onUserEdit();
 
       const dataTransfer = event.dataTransfer?.getData("application/reactflow");
       if (!dataTransfer) return;
@@ -159,12 +161,12 @@ const Canvas: React.FC<CanvasProps> = ({ id }) => {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
-        onDrop={onDrop}
-        onDragOver={onDragOver}
         onInit={setReactFlowInstance}
         nodeTypes={nodeTypes}
         proOptions={proOptions}
         snapGrid={[gridSize, gridSize]}
+        onDrop={onDrop}
+        onDragOver={onDragOver}
         fitView
       >
         <Background gap={gridSize} />
