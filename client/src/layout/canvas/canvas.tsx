@@ -14,13 +14,16 @@ import {
   addEdge,
 } from "@xyflow/react";
 
+import "./canvas.scss";
+
 import { useFlowStore } from "@/store/flowStore";
 import { getNodetypes } from "@/registry";
 
 import "@xyflow/react/dist/style.css";
 import isEqual from "lodash.isequal";
+import { relative } from "path";
 
-const gridSize = 25;
+const gridSize = 80;
 const proOptions = { hideAttribution: true };
 
 interface NodeData {
@@ -32,10 +35,11 @@ interface NodeData {
 const nodeTypes: any = Object.fromEntries(getNodetypes());
 
 interface CanvasProps {
-  id?: any;
+  id?: string;
+  onUserEdit: () => void;
 }
 
-const Canvas: React.FC<CanvasProps> = ({ id }) => {
+const Canvas: React.FC<CanvasProps> = ({ id, onUserEdit }) => {
   const { screenToFlowPosition } = useReactFlow();
   const [_, setReactFlowInstance] = useState<ReactFlowInstance | null>(null);
 
@@ -91,6 +95,8 @@ const Canvas: React.FC<CanvasProps> = ({ id }) => {
     (event: React.DragEvent<HTMLDivElement>) => {
       event.preventDefault();
 
+      onUserEdit();
+
       const dataTransfer = event.dataTransfer?.getData("application/reactflow");
       if (!dataTransfer) return;
 
@@ -143,7 +149,7 @@ const Canvas: React.FC<CanvasProps> = ({ id }) => {
         console.error("Error parsing drag data:", error);
       }
     },
-    [screenToFlowPosition, setNodes]
+    [screenToFlowPosition, setNodes, onUserEdit]
   );
 
   const onDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
@@ -152,27 +158,22 @@ const Canvas: React.FC<CanvasProps> = ({ id }) => {
   }, []);
 
   return (
-    <div style={{ width: "100%", height: "calc(100vh - 70px)" }}>
+    <div className="canvas-container">
       <ReactFlow
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
-        onDrop={onDrop}
-        onDragOver={onDragOver}
         onInit={setReactFlowInstance}
         nodeTypes={nodeTypes}
         proOptions={proOptions}
         snapGrid={[gridSize, gridSize]}
+        onDrop={onDrop}
+        onDragOver={onDragOver}
         fitView
       >
-        <Background gap={gridSize} />
-        <Controls
-          position="top-right"
-          orientation="horizontal"
-          className="text-black border-4 border-card shadow-lg shadow-black/50"
-        />
+        <Background gap={gridSize} color="#7B7B7B" />
       </ReactFlow>
     </div>
   );

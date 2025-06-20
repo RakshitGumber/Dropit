@@ -12,19 +12,9 @@
     align-items: center;
     justify-content: flex-end;
     position: relative;
-
-    padding: 24px;
+    padding: 40px;
 
     gap: 24px;
-
-    @media only screen and (max-width: 600px) {
-      flex-direction: column;
-      align-items: flex-end;
-      justify-content: flex-start;
-      padding: 12px;
-
-      gap: 8px;
-    }
 
     .nav-item {
       a {
@@ -35,9 +25,6 @@
         align-items: flex-end;
 
         gap: 12px;
-
-        @media only screen and (max-width: 600px) {
-        }
 
         div {
           display: flex;
@@ -72,8 +59,8 @@
     justify-content: center;
     flex-direction: column;
     position: relative;
-    margin-top: 100px;
     gap: 64px;
+    margin-top: 64px;
 
     width: 100%;
 

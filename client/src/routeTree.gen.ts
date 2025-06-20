@@ -8,146 +8,69 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-// Import Routes
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as WaitlistRouteRouteImport } from './routes/waitlist/route'
+import { Route as IndexRouteRouteImport } from './routes/index/route'
+import { Route as AuthSignupRouteRouteImport } from './routes/auth/signup/route'
+import { Route as AuthLoginRouteRouteImport } from './routes/auth/login/route'
+import { Route as waitlistPreregisterRouteRouteImport } from './routes/(waitlist)/preregister/route'
+import { Route as protectedDashboardRouteRouteImport } from './routes/(protected)/dashboard/route'
+import { Route as protectedFlowIdRouteImport } from './routes/(protected)/flow/$id'
+import { Route as waitlistTryFlowRouteRouteImport } from './routes/(waitlist)/try/flow/route'
+import { Route as waitlistTryApiRouteRouteImport } from './routes/(waitlist)/try/api/route'
+import { Route as waitlistTryFlowFlowIdRouteImport } from './routes/(waitlist)/try/flow/$flowId'
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as WaitlistRouteImport } from './routes/waitlist/route'
-import { Route as IndexRouteImport } from './routes/index/route'
-import { Route as AuthSignupRouteImport } from './routes/auth/signup/route'
-import { Route as AuthLoginRouteImport } from './routes/auth/login/route'
-import { Route as waitlistPreregisterRouteImport } from './routes/(waitlist)/preregister/route'
-import { Route as protectedDashboardRouteImport } from './routes/(protected)/dashboard/route'
-import { Route as protectedFlowIdImport } from './routes/(protected)/flow/$id'
-import { Route as waitlistTryFlowRouteImport } from './routes/(waitlist)/try/flow/route'
-import { Route as waitlistTryApiRouteImport } from './routes/(waitlist)/try/api/route'
-
-// Create/Update Routes
-
-const WaitlistRouteRoute = WaitlistRouteImport.update({
+const WaitlistRouteRoute = WaitlistRouteRouteImport.update({
   id: '/waitlist',
   path: '/waitlist',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const IndexRouteRoute = IndexRouteImport.update({
+const IndexRouteRoute = IndexRouteRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const AuthSignupRouteRoute = AuthSignupRouteImport.update({
+const AuthSignupRouteRoute = AuthSignupRouteRouteImport.update({
   id: '/auth/signup',
   path: '/auth/signup',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const AuthLoginRouteRoute = AuthLoginRouteImport.update({
+const AuthLoginRouteRoute = AuthLoginRouteRouteImport.update({
   id: '/auth/login',
   path: '/auth/login',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const waitlistPreregisterRouteRoute = waitlistPreregisterRouteImport.update({
-  id: '/(waitlist)/preregister',
-  path: '/preregister',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const protectedDashboardRouteRoute = protectedDashboardRouteImport.update({
+const waitlistPreregisterRouteRoute =
+  waitlistPreregisterRouteRouteImport.update({
+    id: '/(waitlist)/preregister',
+    path: '/preregister',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const protectedDashboardRouteRoute = protectedDashboardRouteRouteImport.update({
   id: '/(protected)/dashboard',
   path: '/dashboard',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const protectedFlowIdRoute = protectedFlowIdImport.update({
+const protectedFlowIdRoute = protectedFlowIdRouteImport.update({
   id: '/(protected)/flow/$id',
   path: '/flow/$id',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const waitlistTryFlowRouteRoute = waitlistTryFlowRouteImport.update({
+const waitlistTryFlowRouteRoute = waitlistTryFlowRouteRouteImport.update({
   id: '/(waitlist)/try/flow',
   path: '/try/flow',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const waitlistTryApiRouteRoute = waitlistTryApiRouteImport.update({
+const waitlistTryApiRouteRoute = waitlistTryApiRouteRouteImport.update({
   id: '/(waitlist)/try/api',
   path: '/try/api',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-// Populate the FileRoutesByPath interface
-
-declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRoute
-    }
-    '/waitlist': {
-      id: '/waitlist'
-      path: '/waitlist'
-      fullPath: '/waitlist'
-      preLoaderRoute: typeof WaitlistRouteImport
-      parentRoute: typeof rootRoute
-    }
-    '/(protected)/dashboard': {
-      id: '/(protected)/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof protectedDashboardRouteImport
-      parentRoute: typeof rootRoute
-    }
-    '/(waitlist)/preregister': {
-      id: '/(waitlist)/preregister'
-      path: '/preregister'
-      fullPath: '/preregister'
-      preLoaderRoute: typeof waitlistPreregisterRouteImport
-      parentRoute: typeof rootRoute
-    }
-    '/auth/login': {
-      id: '/auth/login'
-      path: '/auth/login'
-      fullPath: '/auth/login'
-      preLoaderRoute: typeof AuthLoginRouteImport
-      parentRoute: typeof rootRoute
-    }
-    '/auth/signup': {
-      id: '/auth/signup'
-      path: '/auth/signup'
-      fullPath: '/auth/signup'
-      preLoaderRoute: typeof AuthSignupRouteImport
-      parentRoute: typeof rootRoute
-    }
-    '/(waitlist)/try/api': {
-      id: '/(waitlist)/try/api'
-      path: '/try/api'
-      fullPath: '/try/api'
-      preLoaderRoute: typeof waitlistTryApiRouteImport
-      parentRoute: typeof rootRoute
-    }
-    '/(waitlist)/try/flow': {
-      id: '/(waitlist)/try/flow'
-      path: '/try/flow'
-      fullPath: '/try/flow'
-      preLoaderRoute: typeof waitlistTryFlowRouteImport
-      parentRoute: typeof rootRoute
-    }
-    '/(protected)/flow/$id': {
-      id: '/(protected)/flow/$id'
-      path: '/flow/$id'
-      fullPath: '/flow/$id'
-      preLoaderRoute: typeof protectedFlowIdImport
-      parentRoute: typeof rootRoute
-    }
-  }
-}
-
-// Create and export the route tree
+const waitlistTryFlowFlowIdRoute = waitlistTryFlowFlowIdRouteImport.update({
+  id: '/$flowId',
+  path: '/$flowId',
+  getParentRoute: () => waitlistTryFlowRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRouteRoute
@@ -157,10 +80,10 @@ export interface FileRoutesByFullPath {
   '/auth/login': typeof AuthLoginRouteRoute
   '/auth/signup': typeof AuthSignupRouteRoute
   '/try/api': typeof waitlistTryApiRouteRoute
-  '/try/flow': typeof waitlistTryFlowRouteRoute
+  '/try/flow': typeof waitlistTryFlowRouteRouteWithChildren
   '/flow/$id': typeof protectedFlowIdRoute
+  '/try/flow/$flowId': typeof waitlistTryFlowFlowIdRoute
 }
-
 export interface FileRoutesByTo {
   '/': typeof IndexRouteRoute
   '/waitlist': typeof WaitlistRouteRoute
@@ -169,12 +92,12 @@ export interface FileRoutesByTo {
   '/auth/login': typeof AuthLoginRouteRoute
   '/auth/signup': typeof AuthSignupRouteRoute
   '/try/api': typeof waitlistTryApiRouteRoute
-  '/try/flow': typeof waitlistTryFlowRouteRoute
+  '/try/flow': typeof waitlistTryFlowRouteRouteWithChildren
   '/flow/$id': typeof protectedFlowIdRoute
+  '/try/flow/$flowId': typeof waitlistTryFlowFlowIdRoute
 }
-
 export interface FileRoutesById {
-  __root__: typeof rootRoute
+  __root__: typeof rootRouteImport
   '/': typeof IndexRouteRoute
   '/waitlist': typeof WaitlistRouteRoute
   '/(protected)/dashboard': typeof protectedDashboardRouteRoute
@@ -182,10 +105,10 @@ export interface FileRoutesById {
   '/auth/login': typeof AuthLoginRouteRoute
   '/auth/signup': typeof AuthSignupRouteRoute
   '/(waitlist)/try/api': typeof waitlistTryApiRouteRoute
-  '/(waitlist)/try/flow': typeof waitlistTryFlowRouteRoute
+  '/(waitlist)/try/flow': typeof waitlistTryFlowRouteRouteWithChildren
   '/(protected)/flow/$id': typeof protectedFlowIdRoute
+  '/(waitlist)/try/flow/$flowId': typeof waitlistTryFlowFlowIdRoute
 }
-
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
@@ -198,6 +121,7 @@ export interface FileRouteTypes {
     | '/try/api'
     | '/try/flow'
     | '/flow/$id'
+    | '/try/flow/$flowId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -209,6 +133,7 @@ export interface FileRouteTypes {
     | '/try/api'
     | '/try/flow'
     | '/flow/$id'
+    | '/try/flow/$flowId'
   id:
     | '__root__'
     | '/'
@@ -220,9 +145,9 @@ export interface FileRouteTypes {
     | '/(waitlist)/try/api'
     | '/(waitlist)/try/flow'
     | '/(protected)/flow/$id'
+    | '/(waitlist)/try/flow/$flowId'
   fileRoutesById: FileRoutesById
 }
-
 export interface RootRouteChildren {
   IndexRouteRoute: typeof IndexRouteRoute
   WaitlistRouteRoute: typeof WaitlistRouteRoute
@@ -231,9 +156,95 @@ export interface RootRouteChildren {
   AuthLoginRouteRoute: typeof AuthLoginRouteRoute
   AuthSignupRouteRoute: typeof AuthSignupRouteRoute
   waitlistTryApiRouteRoute: typeof waitlistTryApiRouteRoute
-  waitlistTryFlowRouteRoute: typeof waitlistTryFlowRouteRoute
+  waitlistTryFlowRouteRoute: typeof waitlistTryFlowRouteRouteWithChildren
   protectedFlowIdRoute: typeof protectedFlowIdRoute
 }
+
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/waitlist': {
+      id: '/waitlist'
+      path: '/waitlist'
+      fullPath: '/waitlist'
+      preLoaderRoute: typeof WaitlistRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/signup': {
+      id: '/auth/signup'
+      path: '/auth/signup'
+      fullPath: '/auth/signup'
+      preLoaderRoute: typeof AuthSignupRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/login': {
+      id: '/auth/login'
+      path: '/auth/login'
+      fullPath: '/auth/login'
+      preLoaderRoute: typeof AuthLoginRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(waitlist)/preregister': {
+      id: '/(waitlist)/preregister'
+      path: '/preregister'
+      fullPath: '/preregister'
+      preLoaderRoute: typeof waitlistPreregisterRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(protected)/dashboard': {
+      id: '/(protected)/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof protectedDashboardRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(protected)/flow/$id': {
+      id: '/(protected)/flow/$id'
+      path: '/flow/$id'
+      fullPath: '/flow/$id'
+      preLoaderRoute: typeof protectedFlowIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(waitlist)/try/flow': {
+      id: '/(waitlist)/try/flow'
+      path: '/try/flow'
+      fullPath: '/try/flow'
+      preLoaderRoute: typeof waitlistTryFlowRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(waitlist)/try/api': {
+      id: '/(waitlist)/try/api'
+      path: '/try/api'
+      fullPath: '/try/api'
+      preLoaderRoute: typeof waitlistTryApiRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(waitlist)/try/flow/$flowId': {
+      id: '/(waitlist)/try/flow/$flowId'
+      path: '/$flowId'
+      fullPath: '/try/flow/$flowId'
+      preLoaderRoute: typeof waitlistTryFlowFlowIdRouteImport
+      parentRoute: typeof waitlistTryFlowRouteRoute
+    }
+  }
+}
+
+interface waitlistTryFlowRouteRouteChildren {
+  waitlistTryFlowFlowIdRoute: typeof waitlistTryFlowFlowIdRoute
+}
+
+const waitlistTryFlowRouteRouteChildren: waitlistTryFlowRouteRouteChildren = {
+  waitlistTryFlowFlowIdRoute: waitlistTryFlowFlowIdRoute,
+}
+
+const waitlistTryFlowRouteRouteWithChildren =
+  waitlistTryFlowRouteRoute._addFileChildren(waitlistTryFlowRouteRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRouteRoute: IndexRouteRoute,
@@ -243,58 +254,9 @@ const rootRouteChildren: RootRouteChildren = {
   AuthLoginRouteRoute: AuthLoginRouteRoute,
   AuthSignupRouteRoute: AuthSignupRouteRoute,
   waitlistTryApiRouteRoute: waitlistTryApiRouteRoute,
-  waitlistTryFlowRouteRoute: waitlistTryFlowRouteRoute,
+  waitlistTryFlowRouteRoute: waitlistTryFlowRouteRouteWithChildren,
   protectedFlowIdRoute: protectedFlowIdRoute,
 }
-
-export const routeTree = rootRoute
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/",
-        "/waitlist",
-        "/(protected)/dashboard",
-        "/(waitlist)/preregister",
-        "/auth/login",
-        "/auth/signup",
-        "/(waitlist)/try/api",
-        "/(waitlist)/try/flow",
-        "/(protected)/flow/$id"
-      ]
-    },
-    "/": {
-      "filePath": "index/route.tsx"
-    },
-    "/waitlist": {
-      "filePath": "waitlist/route.tsx"
-    },
-    "/(protected)/dashboard": {
-      "filePath": "(protected)/dashboard/route.tsx"
-    },
-    "/(waitlist)/preregister": {
-      "filePath": "(waitlist)/preregister/route.tsx"
-    },
-    "/auth/login": {
-      "filePath": "auth/login/route.tsx"
-    },
-    "/auth/signup": {
-      "filePath": "auth/signup/route.tsx"
-    },
-    "/(waitlist)/try/api": {
-      "filePath": "(waitlist)/try/api/route.tsx"
-    },
-    "/(waitlist)/try/flow": {
-      "filePath": "(waitlist)/try/flow/route.tsx"
-    },
-    "/(protected)/flow/$id": {
-      "filePath": "(protected)/flow/$id.tsx"
-    }
-  }
-}
-ROUTE_MANIFEST_END */
