@@ -1,4 +1,3 @@
-import { Sidebar, Canvas } from ".";
 import { ReactFlowProvider } from "@xyflow/react";
 import { FlowHeader } from "./header";
 import "./editor.scss";
@@ -6,6 +5,9 @@ import { useNavigate, useParams } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createFlow } from "@/api";
 import { useFlowStore } from "@/store/flowStore";
+import Sidebar from "./sidebar/flow-siderbar";
+import Canvas from "./canvas/canvas";
+import { Toolbar } from "./toolbar";
 
 const FlowEditor = () => {
   const navigate = useNavigate();
@@ -54,10 +56,13 @@ const FlowEditor = () => {
       <ReactFlowProvider>
         <div className="flow-container">
           <Sidebar />
-          <Canvas
-            id={localFlowId ?? routeParams.flowId}
-            onUserEdit={handleInteraction}
-          />
+          <div className="canvas-container">
+            <Toolbar />
+            <Canvas
+              id={localFlowId ?? routeParams.flowId}
+              onUserEdit={handleInteraction}
+            />
+          </div>
         </div>
       </ReactFlowProvider>
     </div>

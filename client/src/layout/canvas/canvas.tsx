@@ -23,7 +23,7 @@ import "@xyflow/react/dist/style.css";
 import isEqual from "lodash.isequal";
 import { relative } from "path";
 
-const gridSize = 25;
+const gridSize = 80;
 const proOptions = { hideAttribution: true };
 
 interface NodeData {
@@ -173,12 +173,7 @@ const Canvas: React.FC<CanvasProps> = ({ id, onUserEdit }) => {
         onDragOver={onDragOver}
         fitView
       >
-        <Background gap={gridSize} />
-        <Controls
-          position="top-right"
-          orientation="horizontal"
-          className="text-black border-4 border-card shadow-lg shadow-black/50"
-        />
+        <Background gap={gridSize} color="#7B7B7B" />
       </ReactFlow>
     </div>
   );
