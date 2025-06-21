@@ -1,4 +1,4 @@
-import { Node, NodeContent, NodeHeader } from "@/components/base";
+import { NodeTemplate } from "@/components/base";
 import { useHandleConnections, useNodesData } from "@xyflow/react";
 import showdown from "showdown";
 
@@ -9,7 +9,9 @@ const GeminiRender = ({ response }: { response?: any }) => {
   return <div dangerouslySetInnerHTML={{ __html: html }} />;
 };
 
-export const OutputNode = ({ id }: { id: string; selected: boolean }) => {
+export const OutputNode: React.FC<{ id: string; selected: boolean }> = ({
+  id,
+}) => {
   const summaryConnections = useHandleConnections({
     type: "target",
     id: `${id}-value`,
@@ -17,19 +19,26 @@ export const OutputNode = ({ id }: { id: string; selected: boolean }) => {
   const response = useNodesData(summaryConnections?.[0]?.source);
 
   return (
-    <Node target={[{ id: `${id}-value` }]}>
-      <NodeHeader>OutputNode</NodeHeader>
-      <NodeContent>
-        {response &&
-        response?.type &&
-        ["gemini", "summarize"].includes(response.type) ? (
-          <GeminiRender response={response} />
-        ) : (
-          response?.type === "text" && (
-            <p>{response.data.renderValue as string}</p>
-          )
-        )}
-      </NodeContent>
-    </Node>
+    <NodeTemplate
+      title="Output"
+      content={<OutputResponse response={response} />}
+      target={[{ id: `${id}-value` }]}
+    />
+  );
+};
+
+const OutputResponse = ({ response }: { response: any }) => {
+  return (
+    <div>
+      {response &&
+      response?.type &&
+      ["gemini", "summarize"].includes(response.type) ? (
+        <GeminiRender response={response} />
+      ) : (
+        response?.type === "text" && (
+          <p>{response.data.renderValue as string}</p>
+        )
+      )}
+    </div>
   );
 };

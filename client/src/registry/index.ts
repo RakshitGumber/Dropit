@@ -26,7 +26,7 @@ const registerNode = <T extends Record<string, any>>(
 
 (() => {
   registerNode({ nodeType: "text", label: "Text", node: TextNode });
-  registerNode({ nodeType: "output", label: "Output", node: OutputNode });
+  registerNode({ nodeType: "text-output", label: "Output", node: OutputNode });
   registerNode({ nodeType: "variable", label: "Variable", node: VariableNode });
   registerNode({
     nodeType: "summarize",

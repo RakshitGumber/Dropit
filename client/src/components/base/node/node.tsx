@@ -46,7 +46,7 @@ export const Node: React.FC<NodeProps> = ({
     <div className="node" style={style}>
       {resizable && (
         <NodeResizer
-          color="#ff0071"
+          color="#ff4f4f"
           isVisible={selected}
           minWidth={100}
           minHeight={107}
