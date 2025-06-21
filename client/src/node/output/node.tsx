@@ -9,13 +9,7 @@ const GeminiRender = ({ response }: { response?: any }) => {
   return <div dangerouslySetInnerHTML={{ __html: html }} />;
 };
 
-export const OutputNode = ({
-  id,
-  selected,
-}: {
-  id: string;
-  selected: boolean;
-}) => {
+export const OutputNode = ({ id }: { id: string; selected: boolean }) => {
   const summaryConnections = useHandleConnections({
     type: "target",
     id: `${id}-value`,
@@ -23,18 +17,16 @@ export const OutputNode = ({
   const response = useNodesData(summaryConnections?.[0]?.source);
 
   return (
-    <Node target={[{ id: `${id}-value` }]} selected={selected}>
+    <Node target={[{ id: `${id}-value` }]}>
       <NodeHeader>OutputNode</NodeHeader>
-      <NodeContent className="bg-background p-2 rounded-md h-[calc(100%-3rem)] overflow-auto">
+      <NodeContent>
         {response &&
         response?.type &&
         ["gemini", "summarize"].includes(response.type) ? (
-          <div className="">
-            <GeminiRender response={response} />
-          </div>
+          <GeminiRender response={response} />
         ) : (
           response?.type === "text" && (
-            <p>{response.data.renderValue as string}</p> // TODO: Error aya to dekh liyo
+            <p>{response.data.renderValue as string}</p>
           )
         )}
       </NodeContent>

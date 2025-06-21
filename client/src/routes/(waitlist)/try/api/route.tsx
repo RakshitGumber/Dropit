@@ -5,5 +5,5 @@ export const Route = createFileRoute("/(waitlist)/try/api")({
 });
 
 function RouteComponent() {
-  return <div>Hello "/waitlist/try/api"!</div>;
+  return <></>;
 }

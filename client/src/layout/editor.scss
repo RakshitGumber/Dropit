@@ -1,0 +1,17 @@
+@use "../stylesheets/theme";
+
+.flow-editor {
+  background-color: var(--background-color);
+  width: 100vw;
+  height: calc(100vh - 77px);
+}
+
+.flow-container {
+  display: flex;
+  height: 100%;
+}
+
+.canvas-container {
+  overflow: hidden;
+  
+}

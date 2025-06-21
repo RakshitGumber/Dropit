@@ -13,7 +13,11 @@ export default function themeToggle() {
       className="toggle-mode"
       aria-label="Toggle dark mode"
     >
-      {isDark ? <Icon icon="fa:moon-o" /> : <Icon icon="fa:sun-o" />}
+      {isDark ? (
+        <Icon icon="solar:moon-fog-broken" />
+      ) : (
+        <Icon icon="solar:sun-fog-broken" />
+      )}
     </Toggle.Root>
   );
 }

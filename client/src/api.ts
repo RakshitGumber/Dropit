@@ -29,3 +29,12 @@ export const getMyFlows = (id: string) => api.get(`/flow/getFlows/${id}`);
 
 export const preregisterUser = (data: { username: string; email: string }) =>
   api.post("/join", data);
+
+export const updateFlow = (
+  id: string,
+  data: {
+    name?: string;
+    nodes?: string;
+    edges?: string;
+  }
+) => api.patch(`/flow/${id}`, data);

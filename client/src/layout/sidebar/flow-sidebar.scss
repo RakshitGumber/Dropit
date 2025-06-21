@@ -1,0 +1,65 @@
+@use "../../stylesheets/theme";
+
+.toolbar-sidebar {
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--background-color);
+  border-right: var(--border);
+  transition: width 0.3s ease;
+  overflow: hidden;
+  z-index: 10;
+  width: 350px;
+
+  &.closed {
+    width: 40px !important;
+    .toolbar-content {
+      display: none;
+    }
+  }
+
+  .toolbar-content {
+    padding: 1rem;
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    align-content: flex-start;
+  }
+
+  .toolbar-card {
+    background: var(--card-background);
+    border: var(--border);
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 0.75rem;
+    text-align: center;
+    width: 45%;
+    height: 80px;
+    cursor: grab;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition:
+      transform 0.2s ease,
+      background 0.2s;
+
+    &:hover {
+      background: var(--hover);
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+
+  .collapse-toggle {
+    border: none;
+    background: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1.2rem;
+  }
+}
