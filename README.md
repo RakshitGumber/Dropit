@@ -48,19 +48,12 @@ All with your **final approval** before anything gets triggered.
 - React (TypeScript)
 - Zustand (State)
 - @xyflow/react (Flow UI)
-- Tailwind CSS
+- Sass for styling
 
 **Backend**
 
 - FastAPI + SQLModel
 - PostgreSQL
-- Redis
-- LangChain + OpenAI/Gemini APIs
-
-**DevOps**
-
-- Vercel (Frontend)
-- Docker (Backend)
 
 ---
 
