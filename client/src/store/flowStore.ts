@@ -56,12 +56,10 @@ export const useFlowStore = createWithEqualityFn<FlowState>(
     },
 
     setNodes: (nodes) => {
-      console.log("✅ setNodes:", nodes);
       set({ nodes });
     },
 
     setEdges: (edges) => {
-      console.log("✅ setEdges:", edges);
       set({ edges });
     },
 
@@ -135,10 +133,10 @@ export const useFlowStore = createWithEqualityFn<FlowState>(
     createFlow: async (name) => {
       const { nodes, edges } = get();
 
-      console.log("📦 Saving flow:", { name, nodes, edges });
+      // console.log("📦 Saving flow:", { name, nodes, edges });
 
       if (!nodes.length) {
-        console.warn("⚠️ No nodes to save.");
+        // console.warn("⚠️ No nodes to save.");
       }
 
       // Get user from localStorage
@@ -153,9 +151,9 @@ export const useFlowStore = createWithEqualityFn<FlowState>(
           user_id,
         });
         return data;
-        console.log("✅ Flow saved to backend.");
+        // console.log("✅ Flow saved to backend.");
       } catch (error) {
-        console.error("❌ Error saving flow:", error);
+        // console.error("❌ Error saving flow:", error);
       }
     },
     loadFlow: async (id: number) => {
@@ -167,7 +165,7 @@ export const useFlowStore = createWithEqualityFn<FlowState>(
           edges: JSON.parse(res.data.edges || "[]"),
         });
       } catch (err) {
-        console.error("Error loading flow:", err);
+        // console.error("Error loading flow:", err);
       }
     },
     updateFlow: async (id: string, name?: string) => {
@@ -180,9 +178,9 @@ export const useFlowStore = createWithEqualityFn<FlowState>(
 
       try {
         await api.updateFlow(id, payload);
-        console.log("✅ Flow updated successfully");
+        // console.log("✅ Flow updated successfully");
       } catch (err) {
-        console.error("❌ Error updating flow:", err);
+        // console.error("❌ Error updating flow:", err);
       }
     },
   }),
