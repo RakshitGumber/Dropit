@@ -5,6 +5,7 @@ import {
   SummarizeNode,
   GeminiNode,
   SendMailNode,
+  ConcatNode,
 } from "@/node";
 import React from "react";
 
@@ -35,6 +36,12 @@ const registerNode = <T extends Record<string, any>>(
   });
   registerNode({ nodeType: "gemini", label: "Gemini", node: GeminiNode });
   registerNode({ nodeType: "mail", label: "Mail", node: SendMailNode });
+  registerNode({
+    nodeType: "concat",
+    label: "Concat",
+    node: ConcatNode,
+    group: "Function",
+  });
 })();
 
 const getRegistration = (nodeType: string) => {

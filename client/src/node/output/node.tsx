@@ -9,9 +9,7 @@ const GeminiRender = ({ response }: { response?: any }) => {
   return <div dangerouslySetInnerHTML={{ __html: html }} />;
 };
 
-export const OutputNode: React.FC<{ id: string; selected: boolean }> = ({
-  id,
-}) => {
+export const OutputNode: React.FC<{ id: string }> = ({ id }) => {
   const summaryConnections = useHandleConnections({
     type: "target",
     id: `${id}-value`,
@@ -35,9 +33,12 @@ const OutputResponse = ({ response }: { response: any }) => {
       ["gemini", "summarize"].includes(response.type) ? (
         <GeminiRender response={response} />
       ) : (
-        response?.type === "text" && (
-          <p>{response.data.renderValue as string}</p>
-        )
+        response?.type === "text" ||
+        (response?.type === "concat" && (
+          <div
+            dangerouslySetInnerHTML={{ __html: response.data.renderValue }}
+          />
+        ))
       )}
     </div>
   );
